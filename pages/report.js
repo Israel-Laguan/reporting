@@ -1,21 +1,34 @@
-import React from 'react';
+import React from "react";
 import {
-  Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button
-} from 'reactstrap';
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Button,
+  ButtonToggle,
+  Row,
+  Col
+} from "reactstrap";
 
 const Report = () => (
-    <div>
+  <Row>
+    <Col sm="3">
       <Card>
-        <CardImg top width="128px" src="/report.png" alt="Card image cap" />
+        <CardImg top height="300px" src="/img/pic2.jpg" alt="Card image cap" />
         <CardBody>
           <CardTitle>Report</CardTitle>
-          <CardSubtitle>Company</CardSubtitle>
-          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+          <CardSubtitle>Companiiiiy</CardSubtitle>
+          <CardText>
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </CardText>
           <Button>Button</Button>
         </CardBody>
       </Card>
-    </div>
+    </Col>
+  </Row>
 );
 
 export default Report;
