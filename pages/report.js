@@ -11,24 +11,14 @@ import {
   Row,
   Col
 } from "reactstrap";
+import Header from "../components/Header";
+import BodyReport from "../components/BodyReport";
 
 const Report = () => (
-  <Row>
-    <Col sm="3">
-      <Card>
-        <CardImg top height="300px" src="/img/pic2.jpg" alt="Card image cap" />
-        <CardBody>
-          <CardTitle>Report</CardTitle>
-          <CardSubtitle>Companiiiiy</CardSubtitle>
-          <CardText>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </CardText>
-          <Button>Button</Button>
-        </CardBody>
-      </Card>
-    </Col>
-  </Row>
+  <>
+    <Header />
+    <BodyReport />
+  </>
 );
 
 export default Report;

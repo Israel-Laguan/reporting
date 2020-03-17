@@ -5,7 +5,12 @@ const Reporting = ({ Component, pageProps }) => (
   <div>
     <Head>
       <title>Reporting ETL</title>
-      {/* <link href="/css/print.css" type="text/css" media="print" rel="stylesheet" /> */}
+      <link
+        href="/css/print.css"
+        type="text/css"
+        media="print"
+        rel="stylesheet"
+      />
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <Component {...pageProps} />
