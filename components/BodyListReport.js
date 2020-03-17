@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import {
@@ -7,15 +7,23 @@ import {
   ListGroup,
   ListGroupItem,
   Row,
-  Col
+  Col,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from "reactstrap";
 
 const BodyListReport = ({ data = [] }) => {
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
+
   let reports = data.map(report => (
     <ListGroupItem key={report.invoiceId}>
       <Row>
         <Col>
-          <p className="lead">{`${report.invoiceId} - ${report.client}`}</p>
+          <p className="lead">{`${report.invoiceId} || ${report.client}`}</p>
         </Col>
         <Col md={{ size: 4, offset: 2 }}>
           <Link href="/report">
@@ -24,7 +32,23 @@ const BodyListReport = ({ data = [] }) => {
           <Link href="/edit">
             <Button color="primary">Editar</Button>
           </Link>{" "}
-          <Button color="danger">Eliminar</Button>
+          <Button color="danger" onClick={toggle}>
+            Eliminar
+          </Button>
+          <Modal isOpen={modal} toggle={toggle}>
+            <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+            <ModalBody>
+              ¿Esta seguro que quiere eleminar este reporte?"
+            </ModalBody>
+            <ModalFooter>
+              <Button color="primary" onClick={toggle}>
+                Aceptar
+              </Button>{" "}
+              <Button color="secondary" onClick={toggle}>
+                Cancel
+              </Button>
+            </ModalFooter>
+          </Modal>
         </Col>
       </Row>
     </ListGroupItem>

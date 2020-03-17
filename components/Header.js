@@ -19,20 +19,24 @@ const Header = ({ edit, create }) => {
   return (
     <div>
       <Navbar color="dark" dark expand="md">
-        <Link href="/">
-          <NavbarBrand href="/">Reporte</NavbarBrand>
+        <Link href="/" passHref>
+          <NavbarBrand>Reporte</NavbarBrand>
         </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             {edit && (
               <NavItem>
-                <NavLink href="/edit">Editar</NavLink>
+                <Link href="/edit" passHref>
+                  <NavLink>Editar</NavLink>
+                </Link>
               </NavItem>
             )}
             {create && (
               <NavItem>
-                <NavLink href="/new">Crear Reporte</NavLink>
+                <Link href="/new" passHref>
+                  <NavLink>Crear Reporte</NavLink>
+                </Link>
               </NavItem>
             )}
           </Nav>
