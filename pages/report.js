@@ -16,7 +16,7 @@ import BodyReport from "../components/BodyReport";
 
 const Report = () => (
   <>
-    <Header />
+    <Header edit />
     <BodyReport />
   </>
 );

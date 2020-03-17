@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Link from "next/link";
+import PropTypes from "prop-types";
 import {
   Collapse,
   Navbar,
@@ -9,7 +11,7 @@ import {
   NavLink
 } from "reactstrap";
 
-const Header = props => {
+const Header = ({ edit, create }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -17,18 +19,30 @@ const Header = props => {
   return (
     <div>
       <Navbar color="dark" dark expand="md">
-        <NavbarBrand href="/">Reporte</NavbarBrand>
+        <Link href="/">
+          <NavbarBrand href="/">Reporte</NavbarBrand>
+        </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            <NavItem>
-              <NavLink href="/components/">Editar</NavLink>
-            </NavItem>
+            {edit && (
+              <NavItem>
+                <NavLink href="/edit">Editar</NavLink>
+              </NavItem>
+            )}
+            {create && (
+              <NavItem>
+                <NavLink href="/new">Crear Reporte</NavLink>
+              </NavItem>
+            )}
           </Nav>
         </Collapse>
       </Navbar>
     </div>
   );
 };
-
+Header.propTypes = {
+  edit: PropTypes.bool,
+  create: PropTypes.bool
+};
 export default Header;
