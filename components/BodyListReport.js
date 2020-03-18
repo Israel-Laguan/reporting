@@ -36,7 +36,7 @@ const BodyListReport = ({ data = [] }) => {
             Eliminar
           </Button>
           <Modal isOpen={modal} toggle={toggle}>
-            <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+            <ModalHeader toggle={toggle}>Confirmar</ModalHeader>
             <ModalBody>
               ¿Esta seguro que quiere eleminar este reporte?"
             </ModalBody>
