@@ -11,7 +11,7 @@ const BodyReport = ({ data = {} }) => {
         <Container fluid>
           <Row>
             <Col sm="10">
-              <h1 className="display-3">{data.companyName}</h1>
+              <h1 className="display-3">{data.company}</h1>
             </Col>
             <Col sm="2">
               <Button
@@ -31,38 +31,41 @@ const BodyReport = ({ data = {} }) => {
               <h2 className="display-5">Cliente: {data.client}</h2>
             </Col>
             <Col>
-              <h2 className="display-5">Factura N°: {data.invoiceId}</h2>
+              <h2 className="display-5">Factura N°: {data.reportId}</h2>
             </Col>
           </Row>
-          <p className="lead">Fecha de creacion : {data.lastUpdate}</p>
-          <DetailTable />
-          <TotalPay totalPrice={data.totalPrice} />
+          <p className="lead">Fecha de creacion : {data.createdAt}</p>
+          <DetailTable items={data.items} tax={data.tax} total={data.total} />
+          <TotalPay totalPrice={data.total} />
         </Container>
       </Jumbotron>
     </>
   );
 };
+
 BodyReport.propTypes = {
-  data: PropTypes.shape({
-    invoiceId: PropTypes.string.isRequired,
-    client: PropTypes.string.isRequired,
-    companyName: PropTypes.string.isRequired,
-    items: PropTypes.array.isRequired,
-    totalPrice: PropTypes.number.isRequired,
-    status: PropTypes.string.isRequired,
-    lastUpdate: PropTypes.string.isRequired
-  }).isRequired
+  company: PropTypes.string,
+  client: PropTypes.string,
+  reportId: PropTypes.string,
+  items: PropTypes.string,
+  total: PropTypes.string,
+  tax: PropTypes.number,
+  status: PropTypes.bool,
+  createdAt: PropTypes.string,
+  updateAt: PropTypes.string
 };
 
 BodyReport.defaultProps = {
   data: {
-    invoiceId: "00000001",
+    company: "Azordev",
     client: "Israel",
-    companyName: "Azordev",
-    items: [],
-    totalPrice: 64,
-    status: "done",
-    lastUpdate: "16/03/2020"
+    reportId: "00001",
+    items: "2k arroz * 5 = 10",
+    total: "64.00",
+    tax: "0",
+    status: false,
+    createdAt: "17/03/2020",
+    updatedAt: "17/03/2020"
   }
 };
 
