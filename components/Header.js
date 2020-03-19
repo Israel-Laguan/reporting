@@ -18,7 +18,7 @@ const Header = ({ edit, create }) => {
 
   return (
     <div>
-      <Navbar color="dark" dark expand="md">
+      <Navbar dark expand="md" style={{ backgroundColor: "#F56D03" }}>
         <Link href="/" passHref>
           <NavbarBrand>Reporte</NavbarBrand>
         </Link>
