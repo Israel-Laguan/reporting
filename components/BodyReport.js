@@ -34,7 +34,7 @@ const BodyReport = ({ data = {} }) => {
               <h2 className="display-5">Factura N°: {data.reportId}</h2>
             </Col>
           </Row>
-          <p className="lead">Fecha de creacion : {data.createdAt}</p>
+          <p className="lead">Fecha de creación : {data.createdAt}</p>
           <DetailTable items={data.items} tax={data.tax} total={data.total} />
           <TotalPay totalPrice={data.total} />
         </Container>
