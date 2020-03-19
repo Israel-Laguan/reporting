@@ -4,7 +4,7 @@ import BodyReport from "../components/BodyReport";
 
 const Report = () => (
   <>
-    <Header edit />
+    <Header editReport />
     <BodyReport />
   </>
 );

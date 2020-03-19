@@ -11,7 +11,7 @@ import {
   NavLink
 } from "reactstrap";
 
-const Header = ({ edit, create }) => {
+const Header = ({ editReport, createReport, createUser }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -25,17 +25,24 @@ const Header = ({ edit, create }) => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            {edit && (
+            {editReport && (
               <NavItem>
                 <Link href="/edit" passHref>
                   <NavLink>Editar</NavLink>
                 </Link>
               </NavItem>
             )}
-            {create && (
+            {createReport && (
               <NavItem>
                 <Link href="/new" passHref>
                   <NavLink>Crear Reporte</NavLink>
+                </Link>
+              </NavItem>
+            )}
+            {createUser && (
+              <NavItem>
+                <Link href="/new-user" passHref>
+                  <NavLink>Crear Usuario</NavLink>
                 </Link>
               </NavItem>
             )}

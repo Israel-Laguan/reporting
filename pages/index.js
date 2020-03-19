@@ -4,7 +4,7 @@ import BodyListReport from "../components/BodyListReport";
 
 const Home = () => (
   <div>
-    <Header create />
+    <Header createReport createUser />
     <BodyListReport />
   </div>
 );
