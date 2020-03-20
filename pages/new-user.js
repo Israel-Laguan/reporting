@@ -1,24 +1,20 @@
 import React from "react";
 import { Jumbotron, Container } from "reactstrap";
+import withAuth from "../utils/withAuth"
 import Header from "../components/Header";
-import FormMain from "../components/FormMain";
-import withAuth from "../utils/withAuth";
+import FormUser from "../components/FormUser";
 
-const New = () => {
+const newUser = () => {
   return (
     <>
       <Header />
       <Jumbotron fluid>
         <Container fluid>
-          <FormMain />
+          <FormUser />
         </Container>
       </Jumbotron>
     </>
   );
 };
 
-FormMain.defaultProps = {
-  invoice: {}
-};
-
-export default withAuth(New);
+export default withAuth(newUser);

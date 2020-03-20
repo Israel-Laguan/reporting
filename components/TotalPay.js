@@ -6,26 +6,26 @@ const TotalPay = ({ totalPrice, tax }) => {
   return (
     <>
       <Row>
-        <Col sm={{ size: "2", offset: 8 }}>
+        <Col xs={{ size: "4", offset: 4 }} md={{ size: "2", offset: 8 }}>
           <h5 className="display-5">Subtotal</h5>
         </Col>
-        <Col sm={{ size: "2" }}>
+        <Col xs="4" md={{ size: "2" }}>
           <h5 className="display-5">{totalPrice}</h5>
         </Col>
       </Row>
       <Row>
-        <Col sm={{ size: "2", offset: 8 }}>
+        <Col xs={{ size: "4", offset: 4 }} md={{ size: "2", offset: 8 }}>
           <h5 className="display-5">Tax</h5>
         </Col>
-        <Col sm={{ size: "2" }}>
+        <Col xs="4" md={{ size: "2" }}>
           <h5 className="display-5">{tax}</h5>
         </Col>
       </Row>
       <Row>
-        <Col sm={{ size: "2", offset: 8 }}>
+        <Col xs={{ size: "4", offset: 4 }} md={{ size: "2", offset: 8 }}>
           <h5 className="display-5">Total</h5>
         </Col>
-        <Col sm={{ size: "2" }}>
+        <Col xs="4" md={{ size: "2" }}>
           <h5 className="display-5">{totalPrice}</h5>
         </Col>
       </Row>

@@ -1,10 +1,11 @@
 import React from "react";
 import Header from "../components/Header";
 import BodyListReport from "../components/BodyListReport";
+import withAuth from "../utils/withAuth";
 
 const Home = () => (
   <div>
-    <Header create />
+    <Header createReport users />
     <BodyListReport />
   </div>
 );
@@ -34,4 +35,4 @@ BodyListReport.defaultProps = {
   ]
 };
 
-export default Home;
+export default withAuth(Home)

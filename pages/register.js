@@ -1,91 +1,152 @@
-import React from 'react';
-import Link from "next/link";
+import React from 'react'
+import Link from 'next/link'
+import Router from 'next/router'
 
 class RegisterPage extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props)
 
-        this.state = {
-            user: {
-                firstName: '',
-                lastName: '',
-                username: '',
-                password: ''
-            },
-            submitted: false
-        };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      user: {
+        name: '',
+        email: '',
+        password: '',
+        registering: false,
+      },
+      submitted: false,
     }
 
-    handleChange(event) {
-        const { name, value } = event.target;
-        const { user } = this.state;
-        this.setState({
-            user: {
-                ...user,
-                [name]: value
-            }
-        });
-    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
 
-    handleSubmit(event) {
-        event.preventDefault();
+  handleChange(event) {
+    const { name, value } = event.target
+    const { user } = this.state
+    this.setState({
+      user: {
+        ...user,
+        [name]: value,
+      },
+    })
+  }
 
-        this.setState({ submitted: true });
-        const { user } = this.state;
-        if (user.firstName && user.lastName && user.username && user.password) {
-            this.props.register(user);
+  async handleSubmit(event) {
+    event.preventDefault()
+
+    const { user } = this.state
+    if (user.name && user.email && user.password) {
+      const headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+      const options = {
+        method: 'POST',
+        body: JSON.stringify({
+          ...user,
+        }),
+      }
+      const res = await fetch('https://etl-auth.herokuapp.com/api/v1/auth/signup', {
+        ...options,
+        headers,
+      }).then(res => {
+        if (!res.ok) return {
+          success: false,
+          msg: res.statusText,
+          errors:[res]
         }
+        return res.json()
+      })
+      const { success, errors, msg, data } = res
+      if (!success) {
+        console.error(msg, errors)
+        this.setState({ ...this.state, registering: false })
+      } else {
+        console.log(res)
+        return Router.push('/login')
+      }
     }
+    this.setState({ submitted: true })
+  }
 
-    render() {
-        const { registering  } = this.props;
-        const { user, submitted } = this.state;
-        return (
-            <div className="col-md-6 col-md-offset-3">
-                <h2>Register</h2>
-                <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !user.firstName ? ' has-error' : '')}>
-                        <label htmlFor="firstName">First Name</label>
-                        <input type="text" className="form-control" name="firstName" value={user.firstName} onChange={this.handleChange} />
-                        {submitted && !user.firstName &&
-                            <div className="help-block">First Name is required</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !user.lastName ? ' has-error' : '')}>
-                        <label htmlFor="lastName">Last Name</label>
-                        <input type="text" className="form-control" name="lastName" value={user.lastName} onChange={this.handleChange} />
-                        {submitted && !user.lastName &&
-                            <div className="help-block">Last Name is required</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !user.username ? ' has-error' : '')}>
-                        <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" name="username" value={user.username} onChange={this.handleChange} />
-                        {submitted && !user.username &&
-                            <div className="help-block">Username is required</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !user.password ? ' has-error' : '')}>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" name="password" value={user.password} onChange={this.handleChange} />
-                        {submitted && !user.password &&
-                            <div className="help-block">Password is required</div>
-                        }
-                    </div>
-                    <div className="form-group">
-                        <button className="btn btn-primary">Register</button>
-                        {registering && 
-                            <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                        }
-                        <Link href="/login" className="btn btn-link">Cancel</Link>
-                    </div>
-                </form>
-            </div>
-        );
-    }
+  render() {
+    const { user, submitted, registering } = this.state
+    return (
+      <div className="jumbotron jumbotron-fluid">
+        <div className="container">
+          <div className="col-md-6 mx-auto">
+            <h2>Registro</h2>
+            <form name="form" onSubmit={this.handleSubmit}>
+              <div
+                className={
+                  'form-group' + (submitted && !user.name ? ' has-error' : '')
+                }
+              >
+                <label htmlFor="firstName">Usuario</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  value={user.name}
+                  onChange={this.handleChange}
+                />
+                {submitted && !user.name && (
+                  <p className="text-danger">Nombre es requerido</p>
+                )}
+              </div>
+              <div
+                className={
+                  'form-group' + (submitted && !user.email ? ' has-error' : '')
+                }
+              >
+                <label htmlFor="username">Email</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="email"
+                  value={user.email}
+                  onChange={this.handleChange}
+                />
+                {submitted && !user.email && (
+                  <p className="text-danger">Email es requerido</p>
+                )}
+              </div>
+              <div
+                className={
+                  'form-group' +
+                  (submitted && !user.password ? ' has-error' : '')
+                }
+              >
+                <label htmlFor="password">Contraseña</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  value={user.password}
+                  onChange={this.handleChange}
+                />
+                {submitted && !user.password && (
+                  <p className="text-danger">Contraseña es requerido</p>
+                )}
+              </div>
+              <div className="form-group d-flex justify-content-center">
+                <button className="btn btn-primary">Registrar</button>
+                {registering && (
+                  <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                )}
+                {'  '}
+                <Link href="/login">
+                  <a type="button" className="btn btn-danger ml-3">
+                    Cancel
+                  </a>
+                </Link>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
-export default RegisterPage;
+export default RegisterPage
