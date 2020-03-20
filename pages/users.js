@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import fetch from 'node-fetch'
-import Link from "next/link";
+import Link from 'next/link'
 import {
   Jumbotron,
   Container,
@@ -9,30 +9,49 @@ import {
   ListGroupItem,
   Button,
   Row,
-  Col
-} from "reactstrap";
-import Header from "../components/Header";
-import withAuth from "../utils/withAuth";
+  Col,
+} from 'reactstrap'
+import Header from '../components/Header'
+import withAuth from '../utils/withAuth'
 
-const Users = ({ list = [] }) => {
-  let renderUsers = list.map(user => {
+const Users = ({ auth, list = [] }) => {
+  const [users, setUsers] = useState([])
+  const [errors, setErrors] = useState([])
+  React.useEffect( () => {
+    async function fetchUsers(){
+      const headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+      headers['x-access-token'] = auth.getToken();
+      const res = await fetch('https://etl-auth.herokuapp.com/api/v1/user/all', {headers})
+      const { success, errors, msg, data } = await res.json()
+      if (!success) {
+        console.error(msg, errors)
+        setErrors(errors)
+      }
+      setUsers(data)
+    }
+    fetchUsers();
+  }, [])
+  let renderUsers = users.map(user => {
     return (
-      <ListGroupItem key={user.id}>
+      <ListGroupItem key={user._id}>
         <Row>
           <Col>
-            <p className="lead">{`${user.username} || ${user.firstName} ${user.lastName} (${user.rol}) `}</p>
+            <p className="lead">{`${user.email} || ${user.name} (${user.role}) `}</p>
           </Col>
           <Col md={{ size: 2, offset: 4 }}>
-            <Link href="/edit-user/[id]" as={`/edit-user/${user.id}`} passHref>
+            <Link href="/edit-user/[id]" as={`/edit-user/${user._id}`} passHref>
               <a type="button" className="btn btn-primary">
                 Editar
               </a>
-            </Link>{" "}
+            </Link>{' '}
           </Col>
         </Row>
       </ListGroupItem>
-    );
-  });
+    )
+  })
 
   return (
     <>
@@ -43,55 +62,40 @@ const Users = ({ list = [] }) => {
         </Container>
       </Jumbotron>
     </>
-  );
-};
+  )
+}
 
 Users.propTypes = {
   list: PropTypes.arrayOf(
     PropTypes.shape({
-      firstName: PropTypes.string,
-      lastName: PropTypes.string,
-      username: PropTypes.string,
-      rol: PropTypes.string
-    }).isRequired
-  )
-};
+      name: PropTypes.string,
+      email: PropTypes.string,
+      role: PropTypes.string,
+    }).isRequired,
+  ),
+}
 
 Users.defaultProps = {
   list: [
     {
-      id: "1",
-      firstName: "Juan",
-      lastName: "Silupu Maza",
-      username: "adminnn1",
-      rol: "Admin"
+      _id: '1',
+      name: 'Juan Silupu Maza',
+      email: 'adminnn1',
+      role: 'ADMIN',
     },
     {
-      id: "2",
-      firstName: "Henry",
-      lastName: "Tello Maza",
-      username: "adminnn1",
-      rol: "Super Admin"
+      _id: '2',
+      name: 'Henry Silupu Maza',
+      email: 'adminnn1',
+      role: 'BOSS',
     },
     {
-      id: "3",
-      firstName: "Jose",
-      lastName: "Maria Maza",
-      username: "adminnn1",
-      rol: "Jefe"
-    }
-  ]
-};
-
-export async function getStaticProps() {
-  const res = await fetch('https://.../posts')
-  const posts = await res.json();
-
-  return {
-    props: {
-      posts,
+      _id: '3',
+      name: 'Israel',
+      email: 'adminnn1',
+      role: 'EMPLOYEE',
     },
-  }
-};
+  ],
+}
 
-export default withAuth(User);
+export default withAuth(Users)
