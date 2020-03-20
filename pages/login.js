@@ -28,7 +28,7 @@ class LoginPage extends React.Component {
     e.preventDefault();
     const { email, password } = this.state;
     if (email && password) {
-      const { sucess, msg, errors } = await this.props.auth.login(email, password);
+      const { success, msg, errors } = await this.props.auth.login(email, password);
       if (!success) {
         return this.setState({ submitted: true, email: '', password: '', errors, msg  })
       }
