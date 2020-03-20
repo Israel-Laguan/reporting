@@ -11,7 +11,7 @@ import {
   NavLink
 } from "reactstrap";
 
-const Header = ({ editReport, createReport, createUser }) => {
+const Header = ({ editReport, createReport, createUser, editUser, users }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -43,6 +43,13 @@ const Header = ({ editReport, createReport, createUser }) => {
               <NavItem>
                 <Link href="/new-user" passHref>
                   <NavLink>Crear Usuario</NavLink>
+                </Link>
+              </NavItem>
+            )}
+            {users && (
+              <NavItem>
+                <Link href="/users" passHref>
+                  <NavLink>Lista de Usuarios</NavLink>
                 </Link>
               </NavItem>
             )}
