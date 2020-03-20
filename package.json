@@ -8,11 +8,9 @@
     "start": "next start"
   },
   "dependencies": {
-    "connected-react-router": "^6.8.0",
     "jwt-decode": "^2.2.0",
     "next": "9.3.0",
     "next-cookies": "^2.0.3",
-    "next-routes": "^1.4.2",
     "prop-types": "^15.7.2",
     "react": "16.13.0",
     "react-dom": "16.13.0",

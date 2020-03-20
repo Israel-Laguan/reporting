@@ -1,5 +1,6 @@
 import React from "react";
-import Home from "./home"
+import Header from "../components/Header";
+import BodyListReport from "../components/BodyListReport";
 import withAuth from "../utils/withAuth";
 
 const Home = () => (
@@ -31,6 +32,7 @@ BodyListReport.defaultProps = {
       client: "Servicios Azuar SAC",
       lastUpdate: "16/03/2020"
     }
+  ]
 };
 
-export default withAuth(App)
+export default withAuth(Home)

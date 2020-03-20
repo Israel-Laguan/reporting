@@ -1,7 +1,7 @@
 // utils/withAuth.js - a HOC for protected pages
 import React, {Component} from 'react'
 import AuthService from './AuthService'
-import {Router} from "./routes"
+import Router from 'next/router'
 
 export default function withAuth(AuthComponent) {
     const Auth = new AuthService('https://etl-auth.herokuapp.com/api/v1/auth')
@@ -16,7 +16,7 @@ export default function withAuth(AuthComponent) {
 
         componentDidMount() {
             if (!Auth.loggedIn()) {
-                Router.pushRoute('/login');
+                Router.push('/login');
             }
             this.setState({isLoading: false})
         }
