@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import useForm from "../utilities/useForm";
 
-const FormUser = ({ initialValues = {} }) => {
-  console.log(initialValues); //Si llega valores
-
+const FormUser = ({ initialValues }) => {
   const form = useForm({ initialValues });
 
   const handleSubmit = e => {

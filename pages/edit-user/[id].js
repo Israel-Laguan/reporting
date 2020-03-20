@@ -19,7 +19,6 @@ const EditUser = ({ router }) => {
       rol: "Admin"
     });
   }, []);
-  console.log(user);
 
   return (
     <>
