@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import BodyReport from "../components/BodyReport";
+import withAuth from "../utils/withAuth"
 
 const Report = () => (
   <>
@@ -9,4 +10,4 @@ const Report = () => (
   </>
 );
 
-export default Report;
+export default withAuth(Report);

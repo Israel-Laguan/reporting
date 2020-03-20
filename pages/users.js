@@ -1,6 +1,7 @@
 import React from "react";
 import { Jumbotron, Container } from "reactstrap";
 import Header from "../components/Header";
+import withAuth from "../utils/withAuth";
 
 const User = () => {
   return (
@@ -13,4 +14,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default withAuth(User);
