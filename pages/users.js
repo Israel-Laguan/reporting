@@ -78,22 +78,10 @@ Users.propTypes = {
 Users.defaultProps = {
   list: [
     {
-      _id: '1',
-      name: 'Juan Silupu Maza',
-      email: 'adminnn1',
-      role: 'ADMIN',
-    },
-    {
       _id: '2',
       name: 'Henry Silupu Maza',
       email: 'adminnn1',
       role: 'BOSS',
-    },
-    {
-      _id: '3',
-      name: 'Israel',
-      email: 'adminnn1',
-      role: 'EMPLOYEE',
     },
   ],
 }
