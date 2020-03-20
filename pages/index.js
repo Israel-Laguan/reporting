@@ -17,17 +17,11 @@ BodyListReport.defaultProps = {
     {
       reportId: 1,
       invoiceId: "00000001",
-      client: "Israel",
+      client: "MacroSoft",
       lastUpdate: "16/03/2020"
     },
     {
       reportId: 2,
-      invoiceId: "00000002",
-      client: "Juan Jose Silupu",
-      lastUpdate: "16/03/2020"
-    },
-    {
-      reportId: 3,
       invoiceId: "00000003",
       client: "Servicios Azuar SAC",
       lastUpdate: "16/03/2020"
