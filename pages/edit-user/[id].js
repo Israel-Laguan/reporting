@@ -12,9 +12,9 @@ const EditUser = ({ router }) => {
     //.... FETCH....
     setUser({
       id: router.query.id,
-      username: "adadadadad",
-      firstName: "Juan",
-      lastName: "Silupu",
+      username: "walterflores",
+      firstName: "Walter",
+      lastName: "Flores Neciosup",
       password: "asdadadad",
       rol: "Admin"
     });
