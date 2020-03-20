@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import withAuth from "../utils/withAuth";
 
 class RegisterPage extends React.Component {
   constructor(props) {
@@ -7,9 +8,8 @@ class RegisterPage extends React.Component {
 
     this.state = {
       user: {
-        firstName: "",
-        lastName: "",
-        username: "",
+        name: "",
+        email: "",
         password: ""
       },
       submitted: false
@@ -33,15 +33,15 @@ class RegisterPage extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    this.setState({ submitted: true });
     const { user } = this.state;
-    if (user.firstName && user.lastName && user.username && user.password) {
-      this.props.register(user);
+    if (user.name && user.email && user.password) {
+      this.props.auth.register(user);
     }
+    this.setState({ submitted: true });
   }
 
   render() {
-    const { registering } = this.props;
+    const { auth: {registering} } = this.props;
     const { user, submitted } = this.state;
     return (
       <div className="col-md-6 col-md-offset-3">
@@ -49,53 +49,36 @@ class RegisterPage extends React.Component {
         <form name="form" onSubmit={this.handleSubmit}>
           <div
             className={
-              "form-group" + (submitted && !user.firstName ? " has-error" : "")
+              "form-group" + (submitted && !user.name ? " has-error" : "")
             }
           >
-            <label htmlFor="firstName">Nombres</label>
+            <label htmlFor="firstName">Usuario</label>
             <input
               type="text"
               className="form-control"
-              name="firstName"
-              value={user.firstName}
+              name="name"
+              value={user.name}
               onChange={this.handleChange}
             />
-            {submitted && !user.firstName && (
+            {submitted && !user.name && (
               <div className="help-block">Nombre es requerido</div>
             )}
           </div>
           <div
             className={
-              "form-group" + (submitted && !user.lastName ? " has-error" : "")
+              "form-group" + (submitted && !user.email ? " has-error" : "")
             }
           >
-            <label htmlFor="lastName">Apellido</label>
+            <label htmlFor="username">Email</label>
             <input
               type="text"
               className="form-control"
-              name="lastName"
-              value={user.lastName}
+              name="email"
+              value={user.email}
               onChange={this.handleChange}
             />
-            {submitted && !user.lastName && (
-              <div className="help-block">Apellido es requerido</div>
-            )}
-          </div>
-          <div
-            className={
-              "form-group" + (submitted && !user.username ? " has-error" : "")
-            }
-          >
-            <label htmlFor="username">Usuario</label>
-            <input
-              type="text"
-              className="form-control"
-              name="username"
-              value={user.username}
-              onChange={this.handleChange}
-            />
-            {submitted && !user.username && (
-              <div className="help-block">Usuario es requerido</div>
+            {submitted && !user.email && (
+              <div className="help-block">Email es requerido</div>
             )}
           </div>
           <div
@@ -131,4 +114,4 @@ class RegisterPage extends React.Component {
   }
 }
 
-export default RegisterPage;
+export default withAuth(RegisterPage);

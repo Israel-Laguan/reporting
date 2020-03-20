@@ -4,7 +4,7 @@ import AuthService from './AuthService'
 import {Router} from "./routes"
 
 export default function withAuth(AuthComponent) {
-    const Auth = new AuthService('http://localhost:5000')
+    const Auth = new AuthService('https://etl-auth.herokuapp.com/api/v1/auth')
 
     return class Authenticated extends Component {
         constructor(props) {

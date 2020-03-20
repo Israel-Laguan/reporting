@@ -1,24 +1,29 @@
 // utils/AuthService.js
 export default class AuthService {
     constructor(domain) {
-        this.domain = domain || 'http://localhost:5000'
+        this.domain = domain || 'https://etl-auth.herokuapp.com/api/v1/auth'
         this.fetch = this.fetch.bind(this)
         this.login = this.login.bind(this)
     }
 
     login = (email, password) => {
         // Get a token
-        return this.fetch(`${this.domain}/token`, {
+        return this.fetch(`${this.domain}/login`, {
             method: 'POST',
             body: JSON.stringify({
                 email,
                 password
             })
         }).then(res => {
-            this.setToken(res.id_token)
-            return this.fetch(`${this.domain}/user`, {
-                method: 'GET'
-            })
+            const {success, errors} = res;
+            if (!success) {
+                return res;
+            }
+            const { id, email, token} = res.data;
+            this.setToken(token);
+            localStorage.setItem('user_id', id)
+            localStorage.setItem('user_email', email)
+            return res;
         }).then(res => {
             return Promise.resolve(res)
         })
@@ -26,9 +31,9 @@ export default class AuthService {
 
     loggedIn = () => {
         // Checks if there is a saved token and it's still valid
-        /*const token = this.getToken()
-        return !!token && !isTokenExpired(token) // handwaiving here*/
-        return false;
+        const token = this.getToken();
+        if (!token) return false;
+        return true;
     }
 
     setToken = (idToken) => {
@@ -48,12 +53,14 @@ export default class AuthService {
 
     _checkStatus = (response) => {
         // raises an error in case response status is not a success
-        if (response.status >= 200 && response.status < 300) {
+        if (response.success || response.status >= 200 && response.status < 300) {
             return response
         } else {
-            var error = new Error(response.statusText)
-            error.response = response
-            throw error
+            console.error(response);
+            return response;
+            // var error = new Error(response.statusText)
+            // error.response = response
+            // throw error
         }
     }
 
@@ -65,14 +72,14 @@ export default class AuthService {
         }
 
         if (this.loggedIn()) {
-            headers['Authorization'] = 'Bearer ' + this.getToken()
+            headers['x-access-token'] = this.getToken();
         }
 
         return fetch(url, {
             headers,
             ...options
         })
-            .then(this._checkStatus)
-            .then(response => response.json())
+        .then(response => response.json())
+        .then(this._checkStatus)
     }
 }

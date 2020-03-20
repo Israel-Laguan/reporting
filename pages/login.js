@@ -1,14 +1,18 @@
 import React from "react";
 import Link from "next/link";
+import withAuth from "../utils/withAuth"
+import Router from 'next/router'
 
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      username: "",
+      email: "",
       password: "",
-      submitted: false
+      submitted: false,
+      msg: '',
+      errors: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -20,38 +24,41 @@ class LoginPage extends React.Component {
     this.setState({ [name]: value });
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
-
-    this.setState({ submitted: true });
-    const { username, password } = this.state;
-    if (username && password) {
-      this.props.login(username, password);
-    }
+    const { email, password } = this.state;
+    if (email && password) {
+      const { sucess, msg, errors } = await this.props.auth.login(email, password);
+      if (!success) {
+        return this.setState({ submitted: true, email: '', password: '', errors, msg  })
+      }
+      return Router.push('/');
+    } 
+    return this.setState({ submitted: true, email: '', password: '' });
   }
 
   render() {
-    const { loggingIn } = this.props;
-    const { username, password, submitted } = this.state;
+    const { auth: {loggingIn} } = this.props;
+    const { email, password, submitted } = this.state;
     return (
       <div className="col-md-6 col-md-offset-3">
         <h2>Iniciar sesion</h2>
         <form name="form" onSubmit={this.handleSubmit}>
           <div
             className={
-              "form-group" + (submitted && !username ? " has-error" : "")
+              "form-group" + (submitted && !email ? " has-error" : "")
             }
           >
-            <label htmlFor="username">Usuario</label>
+            <label htmlFor="email">Email</label>
             <input
               type="text"
               className="form-control"
-              name="username"
-              value={username}
+              name="email"
+              value={email}
               onChange={this.handleChange}
             />
-            {submitted && !username && (
-              <div className="help-block">Usuario es requerido</div>
+            {submitted && !email && (
+              <div className="help-block">Email es requerido</div>
             )}
           </div>
           <div
@@ -87,4 +94,4 @@ class LoginPage extends React.Component {
   }
 }
 
-export default LoginPage;
+export default withAuth(LoginPage);

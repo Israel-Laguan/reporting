@@ -1,3 +1,5 @@
 import routes from 'next-routes'
 
-module.exports = routes().add('login');
+module.exports = routes()
+    .add('login')
+    .add({name: 'home', pattern: '/', page: 'index'});
