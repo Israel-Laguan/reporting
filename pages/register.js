@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import withAuth from "../utils/withAuth";
 
 class RegisterPage extends React.Component {
   constructor(props) {
@@ -10,7 +9,8 @@ class RegisterPage extends React.Component {
       user: {
         name: "",
         email: "",
-        password: ""
+        password: "",
+        registering: false
       },
       submitted: false
     };
@@ -35,14 +35,13 @@ class RegisterPage extends React.Component {
 
     const { user } = this.state;
     if (user.name && user.email && user.password) {
-      this.props.auth.register(user);
+      console.log(user)
     }
     this.setState({ submitted: true });
   }
 
   render() {
-    const { auth: {registering} } = this.props;
-    const { user, submitted } = this.state;
+    const { user, submitted, registering } = this.state;
     return (
       <div className="col-md-6 col-md-offset-3">
         <h2>Registro</h2>
@@ -114,4 +113,4 @@ class RegisterPage extends React.Component {
   }
 }
 
-export default withAuth(RegisterPage);
+export default RegisterPage;

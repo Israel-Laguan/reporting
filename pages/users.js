@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import fetch from 'node-fetch'
 import Link from "next/link";
 import {
   Jumbotron,
@@ -80,6 +81,17 @@ Users.defaultProps = {
       rol: "Jefe"
     }
   ]
+};
+
+export async function getStaticProps() {
+  const res = await fetch('https://.../posts')
+  const posts = await res.json();
+
+  return {
+    props: {
+      posts,
+    },
+  }
 };
 
 export default withAuth(User);
