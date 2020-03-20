@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const useForm = ({ initialValues }) => {
-  console.log(initialValues);
   const [fields, setFields] = useState(initialValues);
 
   const onChange = event => {
     const { value, name } = event.target;
     setFields({ ...fields, [name]: value });
   };
+  useEffect(() => {
+    setFields(initialValues);
+  });
 
   return {
     fields,
