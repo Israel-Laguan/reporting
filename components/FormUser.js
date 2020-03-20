@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import useForm from "../utilities/useForm";
-import PropTypes from "prop-types";
 
-const FormUser = ({ initialValues, data }) => {
-  console.log(data);
-  console.log(initialValues);
+const FormUser = ({ initialValues = {} }) => {
+  console.log(initialValues); //Si llega valores
 
   const form = useForm({ initialValues });
 
@@ -63,10 +61,11 @@ const FormUser = ({ initialValues, data }) => {
         </select>
       </div>
 
-      <div className="form-group">
+      <div className="form-group d-flex justify-content-center">
         <button className="btn btn-primary">Registrar</button>
+        {"  "}
         <Link href="/report">
-          <a>Cancel</a>
+          <button className=" btn btn-secondary">Cancel</button>
         </Link>
       </div>
     </form>

@@ -10,10 +10,10 @@ const BodyReport = ({ data = {} }) => {
       <Jumbotron fluid>
         <Container fluid>
           <Row>
-            <Col sm="10">
+            <Col>
               <h1 className="display-3">{data.company}</h1>
             </Col>
-            <Col sm="2">
+            <Col className="text-right">
               <Button
                 color="info"
                 onClick={e => {

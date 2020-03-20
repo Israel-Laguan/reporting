@@ -26,7 +26,7 @@ const EditUser = ({ router }) => {
       <Header createUser />
       <Jumbotron fluid>
         <Container fluid>
-          <FormUser initialValues={user} data={user} />
+          <FormUser initialValues={user} />
         </Container>
       </Jumbotron>
     </>
