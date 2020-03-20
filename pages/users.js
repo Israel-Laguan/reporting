@@ -11,6 +11,7 @@ import {
   Col
 } from "reactstrap";
 import Header from "../components/Header";
+import withAuth from "../utils/withAuth";
 
 const Users = ({ list = [] }) => {
   let renderUsers = list.map(user => {
@@ -81,4 +82,4 @@ Users.defaultProps = {
   ]
 };
 
-export default Users;
+export default withAuth(User);

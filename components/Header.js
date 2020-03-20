@@ -19,7 +19,7 @@ const Header = ({ editReport, createReport, createUser, editUser, users }) => {
   return (
     <div>
       <Navbar dark expand="md" style={{ backgroundColor: "#F56D03" }}>
-        <Link href="/" passHref>
+        <Link href="/" {...React.forwardRef()}>
           <NavbarBrand>Reporte</NavbarBrand>
         </Link>
         <NavbarToggler onClick={toggle} />
@@ -27,21 +27,21 @@ const Header = ({ editReport, createReport, createUser, editUser, users }) => {
           <Nav className="mr-auto" navbar>
             {editReport && (
               <NavItem>
-                <Link href="/edit" passHref>
+                <Link href="/edit" {...React.forwardRef()}>
                   <NavLink>Editar</NavLink>
                 </Link>
               </NavItem>
             )}
             {createReport && (
               <NavItem>
-                <Link href="/new" passHref>
+                <Link href="/new" {...React.forwardRef()}>
                   <NavLink>Crear Reporte</NavLink>
                 </Link>
               </NavItem>
             )}
             {createUser && (
               <NavItem>
-                <Link href="/new-user" passHref>
+                <Link href="/new-user" {...React.forwardRef()}>
                   <NavLink>Crear Usuario</NavLink>
                 </Link>
               </NavItem>
