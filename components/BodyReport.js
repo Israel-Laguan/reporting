@@ -9,32 +9,36 @@ const BodyReport = ({ data = {} }) => {
     <>
       <Jumbotron fluid>
         <Container fluid>
+          <div className="text-right">
+            <Button
+              color="info"
+              onClick={e => {
+                e.preventDefault(); // https://www.thoughtco.com/how-to-add-a-print-button-4072006
+                window.print();
+                return false;
+              }}
+            >
+              Imprimir
+            </Button>{" "}
+          </div>
           <Row>
-            <Col>
-              <h1 className="display-3">{data.company}</h1>
-            </Col>
-            <Col className="text-right">
-              <Button
-                color="info"
-                onClick={e => {
-                  e.preventDefault(); // https://www.thoughtco.com/how-to-add-a-print-button-4072006
-                  window.print();
-                  return false;
-                }}
-              >
-                Imprimir
-              </Button>{" "}
+            <Col className="mb-3">
+              <h2 className="display-4">{data.company}</h2>
             </Col>
           </Row>
           <Row>
-            <Col>
-              <h2 className="display-5">Cliente: {data.client}</h2>
+            <Col xs="12" md="6">
+              <h4 className="display-5 inline-block">{`Cliente: ${data.client}`}</h4>
             </Col>
-            <Col>
-              <h2 className="display-5">Factura N°: {data.reportId}</h2>
+            <Col xs="12" md="6">
+              <h4 className="display-5">Factura N°: {data.reportId}</h4>
+            </Col>
+            <Col xs="12" md="6">
+              <h4 className="display-5">
+                Fecha de creación : {data.createdAt}
+              </h4>
             </Col>
           </Row>
-          <p className="lead">Fecha de creación : {data.createdAt}</p>
           <DetailTable items={data.items} tax={data.tax} total={data.total} />
           <TotalPay totalPrice={data.total} />
         </Container>
@@ -58,7 +62,7 @@ BodyReport.propTypes = {
 BodyReport.defaultProps = {
   data: {
     company: "Azordev",
-    client: "Israel",
+    client: "Israel Silupu Maza",
     reportId: "00001",
     items: "2k arroz * 5 = 10",
     total: "64.00",
