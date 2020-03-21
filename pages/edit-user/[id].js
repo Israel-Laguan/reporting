@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Jumbotron, Container } from "reactstrap";
 import Header from "../../components/Header";
 import FormUser from "../../components/FormUser";
-import withAuth from "../utils/withAuth";
+import withAuth from "../../utils/withAuth";
 
 const EditUser = ({auth}) => {
   const router = useRouter();
