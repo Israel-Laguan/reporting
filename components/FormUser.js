@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import Link, { Router } from "next/link";
+import React from "react";
+import Link from "next/link";
+import Router from 'next/router';
 import useForm from "../utilities/useForm";
 import withAuth from "../utils/withAuth";
 import swal from "sweetalert";
@@ -20,10 +21,11 @@ const FormUser = ({ initialValues = {}, auth }) => {
         ...form.fields
       })
     };
-    const res = await fetch("https://etl-auth.herokuapp.com/api/v1/user", {
+    const res = await fetch("http://localhost:8000/api/v1/user/", {
       ...options,
       headers
     }).then(res => {
+      console.log(res)
       if (!res.ok)
         return {
           success: false,
@@ -41,25 +43,29 @@ const FormUser = ({ initialValues = {}, auth }) => {
       });
     }
   };
-
+  React.useEffect(() => {
+    const userRole = localStorage.getItem('user_role')
+    if (userRole === 'ADMIN') setIsAdmin(true);
+  },[]);
   return (
     <form name="form" onSubmit={handleSubmit}>
       <div className="form-group">
-        <label htmlFor="firstName">Nombre Completo</label>
+        <label htmlFor="name">Nombre Completo</label>
         <input
           type="text"
           className="form-control"
           {...form.getInput("name")}
-          id="firstName"
+          id="name"
           required
         />
       </div>
       <div className="form-group">
-        <label htmlFor="username">Email</label>
+        <label htmlFor="email">Email</label>
         <input
           type="email"
           className="form-control"
           {...form.getInput("email")}
+          id='email'
           required
         />
       </div>
@@ -73,9 +79,8 @@ const FormUser = ({ initialValues = {}, auth }) => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="rol">Rol</label>
-        <select className="form-control" {...form.getSelect("rol")} required>
-          <option>ADMIN</option>
+        <label htmlFor="role">Rol</label>
+        <select className="form-control" {...form.getSelect("role")} required>
           <option>BOSS</option>
           <option>EMPLOYEE</option>
         </select>

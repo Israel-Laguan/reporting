@@ -57,7 +57,7 @@ const Header = ({
                 </Link>
               </NavItem>
             )}
-            {createUser && (
+            {createUser && isAdmin && (
               <NavItem>
                 <Link href="/new-user" passHref>
                   <NavLink>Crear Usuario</NavLink>
