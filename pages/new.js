@@ -4,10 +4,10 @@ import Header from "../components/Header";
 import FormMain from "../components/FormMain";
 import withAuth from "../utils/withAuth";
 
-const New = () => {
+const New = ({auth}) => {
   return (
     <>
-      <Header />
+      <Header auth={auth}/>
       <Jumbotron fluid>
         <Container fluid>
           <FormMain />

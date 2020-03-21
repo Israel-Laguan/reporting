@@ -55,7 +55,7 @@ const Users = ({ auth, list = [] }) => {
 
   return (
     <>
-      <Header createUser />
+      <Header createUser auth={auth}/>
       <Jumbotron fluid>
         <Container fluid>
           <ListGroup>{renderUsers}</ListGroup>

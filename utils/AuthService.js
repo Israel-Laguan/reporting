@@ -19,10 +19,11 @@ export default class AuthService {
             if (!success) {
                 return res;
             }
-            const { id, email, token} = res.data;
+            const { id, email, role, token} = res.data;
             this.setToken(token);
             localStorage.setItem('user_id', id)
             localStorage.setItem('user_email', email)
+            localStorage.setItem('user_role', role)
             return res;
         }).then(res => {
             return Promise.resolve(res)
@@ -49,6 +50,9 @@ export default class AuthService {
     logout = () => {
         // Clear user token and profile data from localStorage
         localStorage.removeItem('id_token');
+        localStorage.removeItem('user_email');
+        localStorage.removeItem('user_id');
+        localStorage.removeItem('user_role');
     }
 
     _checkStatus = (response) => {

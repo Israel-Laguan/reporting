@@ -4,10 +4,10 @@ import withAuth from "../utils/withAuth";
 import Header from "../components/Header";
 import FormUser from "../components/FormUser";
 
-const newUser = () => {
+const newUser = ({auth}) => {
   return (
     <>
-      <Header users />
+      <Header users auth={auth}/>
       <Jumbotron fluid>
         <Container fluid>
           <div className="col-md-4 mx-auto">

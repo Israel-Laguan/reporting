@@ -3,8 +3,9 @@ import { useRouter } from "next/router";
 import { Jumbotron, Container } from "reactstrap";
 import Header from "../../components/Header";
 import FormUser from "../../components/FormUser";
+import withAuth from "../utils/withAuth";
 
-const EditUser = () => {
+const EditUser = ({auth}) => {
   const router = useRouter();
   const { id } = router.query;
   const [user, setUser] = useState({});
@@ -20,7 +21,7 @@ const EditUser = () => {
   }, [id]);
   return (
     <>
-      <Header users createUser />
+      <Header users createUser auth={auth}/>
       <Jumbotron fluid>
         <Container fluid>
           <div className="col-md-4 mx-auto">
@@ -32,4 +33,4 @@ const EditUser = () => {
   );
 };
 
-export default EditUser;
+export default withAuth(EditUser);
