@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import Router from 'next/router';
+import Router from "next/router";
 import useForm from "../utilities/useForm";
 import withAuth from "../utils/withAuth";
 import swal from "sweetalert";
@@ -62,7 +62,7 @@ const FormUser = ({ initialValues = {}, auth }) => {
           type="email"
           className="form-control"
           {...form.getInput("email")}
-          id='email'
+          id="email"
           required
         />
       </div>
