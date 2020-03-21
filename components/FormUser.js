@@ -65,6 +65,7 @@ const FormUser = ({ initialValues = {}, auth }) => {
           type="password"
           className="form-control"
           {...form.getInput("password")}
+          minlength="8"
           required
         />
       </div>
