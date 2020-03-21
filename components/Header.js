@@ -19,29 +19,29 @@ const Header = ({ editReport, createReport, createUser, editUser, users }) => {
   return (
     <div>
       <Navbar dark expand="md" style={{ backgroundColor: "#F56D03" }}>
-        <Link href="/">
-          <NavLink style={{ color: "white" }}>Reporte</NavLink>
+        <Link href="/" passHref>
+          <a className="navbar-brand">Reporte</a>
         </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             {editReport && (
               <NavItem>
-                <Link href="/edit">
+                <Link href="/edit" passHref>
                   <NavLink>Editar</NavLink>
                 </Link>
               </NavItem>
             )}
             {createReport && (
               <NavItem>
-                <Link href="/new">
+                <Link href="/new" passHref>
                   <NavLink>Crear Reporte</NavLink>
                 </Link>
               </NavItem>
             )}
             {createUser && (
               <NavItem>
-                <Link href="/new-user">
+                <Link href="/new-user" passHref>
                   <NavLink>Crear Usuario</NavLink>
                 </Link>
               </NavItem>

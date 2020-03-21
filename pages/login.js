@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import withAuth from "../utils/withAuth";
 import Router from "next/router";
-
+import swal from "sweetalert";
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
@@ -33,13 +33,16 @@ class LoginPage extends React.Component {
         password
       );
       if (!success) {
-        return this.setState({
-          submitted: true,
-          email: "",
-          password: "",
-          errors,
-          msg
-        });
+        swal("Error!", errors[0].msg, "error");
+        console.log("error", errors);
+        return;
+        // return this.setState({
+        //   submitted: true,
+        //   email: "",
+        //   password: "",
+        //   errors,
+        //   msg
+        // });
       }
       return Router.push("/");
     }
@@ -50,7 +53,7 @@ class LoginPage extends React.Component {
     const {
       auth: { loggingIn }
     } = this.props;
-    const { email, password, submitted } = this.state;
+    const { email, password, submitted, show } = this.state;
     return (
       <div className="jumbotron jumbotron-fluid">
         <div className="container">
@@ -64,12 +67,13 @@ class LoginPage extends React.Component {
               >
                 <label htmlFor="email">Email</label>
                 <input
-                  type="text"
+                  type="email"
                   className="form-control"
                   name="email"
                   id="email"
                   value={email}
                   onChange={this.handleChange}
+                  required
                 />
                 {submitted && !email && (
                   <p className="text-danger">Email es requerido</p>
@@ -87,6 +91,7 @@ class LoginPage extends React.Component {
                   name="password"
                   value={password}
                   onChange={this.handleChange}
+                  required
                 />
                 {submitted && !password && (
                   <p className="text-danger">Contraseña es requerida</p>

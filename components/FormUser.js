@@ -1,43 +1,65 @@
 import React, { useState } from "react";
-import Link from "next/link";
+import Link, { Router } from "next/link";
 import useForm from "../utilities/useForm";
+import withAuth from "../utils/withAuth";
+import swal from "sweetalert";
 
-const FormUser = ({ initialValues }) => {
+const FormUser = ({ initialValues = {}, auth }) => {
   const form = useForm({ initialValues });
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    console.log(form.fields);
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": auth.getToken()
+    };
+    const options = {
+      method: "POST",
+      body: JSON.stringify({
+        ...form.fields
+      })
+    };
+    const res = await fetch("https://etl-auth.herokuapp.com/api/v1/user", {
+      ...options,
+      headers
+    }).then(res => {
+      if (!res.ok)
+        return {
+          success: false,
+          msg: res.statusText,
+          errors: [res]
+        };
+      return res.json();
+    });
+    const { success, errors, msg, data } = res;
+    if (!success) {
+      swal("Error!", msg, "error");
+    } else {
+      swal("Correcto!", msg, "success").then(() => {
+        Router.push("/users");
+      });
+    }
   };
 
   return (
     <form name="form" onSubmit={handleSubmit}>
       <div className="form-group">
-        <label htmlFor="firstName">Nombres</label>
+        <label htmlFor="firstName">Nombre Completo</label>
         <input
           type="text"
           className="form-control"
-          {...form.getInput("firstName")}
+          {...form.getInput("name")}
           id="firstName"
           required
         />
       </div>
       <div className="form-group">
-        <label htmlFor="lastName">Apellido</label>
+        <label htmlFor="username">Email</label>
         <input
-          type="text"
+          type="email"
           className="form-control"
-          {...form.getInput("lastName")}
-          id="lastName"
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="username">Usuario</label>
-        <input
-          type="text"
-          className="form-control"
-          {...form.getInput("username")}
+          {...form.getInput("email")}
           required
         />
       </div>
@@ -53,9 +75,9 @@ const FormUser = ({ initialValues }) => {
       <div className="form-group">
         <label htmlFor="rol">Rol</label>
         <select className="form-control" {...form.getSelect("rol")} required>
-          <option>Admin</option>
-          <option>Super Admin</option>
-          <option>Jefe</option>
+          <option>ADMIN</option>
+          <option>BOSS</option>
+          <option>EMPLOYEE</option>
         </select>
       </div>
 
@@ -63,11 +85,11 @@ const FormUser = ({ initialValues }) => {
         <button className="btn btn-primary">Registrar</button>
         {"  "}
         <Link href="/report">
-          <button className=" btn btn-secondary">Cancel</button>
+          <button className=" btn btn-secondary ml-3">Cancel</button>
         </Link>
       </div>
     </form>
   );
 };
 
-export default FormUser;
+export default withAuth(FormUser);

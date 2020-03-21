@@ -7,9 +7,10 @@ const useForm = ({ initialValues }) => {
     const { value, name } = event.target;
     setFields({ ...fields, [name]: value });
   };
+
   useEffect(() => {
     setFields(initialValues);
-  });
+  }, [initialValues.id]);
 
   return {
     fields,
