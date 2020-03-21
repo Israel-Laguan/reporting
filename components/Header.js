@@ -43,16 +43,16 @@ const Header = ({
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
-            {editReport && (
+            {editReport && isAdmin && (
               <NavItem>
-                <Link href="/edit" passHref>
+                <Link href="/edit-report" passHref>
                   <NavLink>Editar</NavLink>
                 </Link>
               </NavItem>
             )}
             {createReport && (
               <NavItem>
-                <Link href="/new" passHref>
+                <Link href="/new-report" passHref>
                   <NavLink>Crear Reporte</NavLink>
                 </Link>
               </NavItem>
@@ -64,7 +64,7 @@ const Header = ({
                 </Link>
               </NavItem>
             )}
-            {users && (
+            {users && isAdmin && (
               <NavItem>
                 <Link href="/users" passHref>
                   <NavLink>Lista de Usuarios</NavLink>

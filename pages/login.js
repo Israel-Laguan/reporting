@@ -111,7 +111,7 @@ class LoginPage extends React.Component {
                 <Link href="/register">
                   <a
                     type="button"
-                    href="#"
+                    href="/register"
                     className="btn btn-link ml-3"
                     role="button"
                   >

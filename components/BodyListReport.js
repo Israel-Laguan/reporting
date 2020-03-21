@@ -29,7 +29,7 @@ const BodyListReport = ({ data = [] }) => {
           <Link href="/report">
             <Button color="success">Ver</Button>
           </Link>{" "}
-          <Link href="/edit">
+          <Link href={`/edit-report/${report.invoiceId}`}>
             <Button color="primary">Editar</Button>
           </Link>{" "}
           <Button color="danger" onClick={toggle}>
