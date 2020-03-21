@@ -3,9 +3,9 @@ import Header from "../components/Header";
 import BodyListReport from "../components/BodyListReport";
 import withAuth from "../utils/withAuth";
 
-const Home = () => (
+const Home = ({auth}) => (
   <div>
-    <Header createReport users />
+    <Header createReport users auth={auth}/>
     <BodyListReport />
   </div>
 );

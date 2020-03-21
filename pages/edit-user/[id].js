@@ -1,35 +1,36 @@
 import React, { useState } from "react";
-import { withRouter } from "next/router";
+import { useRouter } from "next/router";
 import { Jumbotron, Container } from "reactstrap";
 import Header from "../../components/Header";
 import FormUser from "../../components/FormUser";
+import withAuth from "../utils/withAuth";
 
-const EditUser = ({ router }) => {
+const EditUser = ({auth}) => {
+  const router = useRouter();
+  const { id } = router.query;
   const [user, setUser] = useState({});
-  React.useEffect(() => {
-    //Traer DATOS con el id
-    console.log(router.query.id);
-    //.... FETCH....
-    setUser({
-      id: router.query.id,
-      username: "walterflores",
-      firstName: "Walter",
-      lastName: "Flores Neciosup",
-      password: "asdadadad",
-      rol: "Admin"
-    });
-  }, []);
 
+  React.useEffect(() => {
+    setUser({
+      id,
+      name: "Walter flores",
+      email: "flores@gmail.com",
+      password: "asdadadad",
+      rol: "ADMIN"
+    });
+  }, [id]);
   return (
     <>
-      <Header createUser />
+      <Header users createUser auth={auth}/>
       <Jumbotron fluid>
         <Container fluid>
-          <FormUser initialValues={user} />
+          <div className="col-md-4 mx-auto">
+            <FormUser initialValues={user} />
+          </div>
         </Container>
       </Jumbotron>
     </>
   );
 };
 
-export default withRouter(EditUser);
+export default withAuth(EditUser);

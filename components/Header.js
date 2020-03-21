@@ -1,66 +1,92 @@
-import React, { useState } from "react";
-import Link from "next/link";
-import PropTypes from "prop-types";
+import React, { useState } from 'react'
+import Link from 'next/link'
+import PropTypes from 'prop-types';
+import Router from "next/router";
+import swal from 'sweetalert';
 import {
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
-  NavLink
-} from "reactstrap";
+  NavLink,
+  Button,
+} from 'reactstrap'
 
-const Header = ({ editReport, createReport, createUser, editUser, users }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Header = ({
+  editReport,
+  createReport,
+  createUser,
+  editUser,
+  users,
+  auth,
+}) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false);
+  const toggle = () => setIsOpen(!isOpen)
 
-  const toggle = () => setIsOpen(!isOpen);
+  const logOut = () => {
+    auth.logout();
+    Router.push("/login");
+  }
 
+  React.useEffect(() => {
+    const userRole = localStorage.getItem('user_role')
+    if (userRole === 'ADMIN') setIsAdmin(true);
+  },[]);
   return (
     <div>
-      <Navbar dark expand="md" style={{ backgroundColor: "#F56D03" }}>
-        <Link href="/">
-          <NavLink style={{ color: "white" }}>Reporte</NavLink>
+      <Navbar dark expand="md" style={{ backgroundColor: '#F56D03' }}>
+        <Link href="/" passHref>
+          <a className="navbar-brand">Reporte</a>
         </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
-            {editReport && (
+          <Nav className="ml-auto" navbar>
+            {editReport && isAdmin && (
               <NavItem>
-                <Link href="/edit">
+                <Link href="/edit-report" passHref>
                   <NavLink>Editar</NavLink>
                 </Link>
               </NavItem>
             )}
             {createReport && (
               <NavItem>
-                <Link href="/new">
+                <Link href="/new-report" passHref>
                   <NavLink>Crear Reporte</NavLink>
                 </Link>
               </NavItem>
             )}
-            {createUser && (
+            {createUser && isAdmin && (
               <NavItem>
-                <Link href="/new-user">
+                <Link href="/new-user" passHref>
                   <NavLink>Crear Usuario</NavLink>
                 </Link>
               </NavItem>
             )}
-            {users && (
+            {users && isAdmin && (
               <NavItem>
                 <Link href="/users" passHref>
                   <NavLink>Lista de Usuarios</NavLink>
                 </Link>
               </NavItem>
             )}
+            <NavItem>
+              <Button color='plain' onClick={() => swal(`Hola!`, 'Nos alegra que estes aca!', 'success')}>
+              Bienvenido!
+              </Button>
+            </NavItem>
+            <NavItem>
+              <Button color="danger" onClick={logOut}>Salir</Button>
+            </NavItem>
           </Nav>
         </Collapse>
       </Navbar>
     </div>
-  );
-};
+  )
+}
 Header.propTypes = {
   edit: PropTypes.bool,
-  create: PropTypes.bool
-};
-export default Header;
+  create: PropTypes.bool,
+}
+export default Header
