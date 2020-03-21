@@ -21,11 +21,10 @@ const FormUser = ({ initialValues = {}, auth }) => {
         ...form.fields
       })
     };
-    const res = await fetch("http://localhost:8000/api/v1/user/", {
+    const res = await fetch("https://etl-auth.herokuapp.com/api/v1/user/", {
       ...options,
       headers
     }).then(res => {
-      console.log(res)
       if (!res.ok)
         return {
           success: false,
@@ -36,6 +35,7 @@ const FormUser = ({ initialValues = {}, auth }) => {
     });
     const { success, errors, msg, data } = res;
     if (!success) {
+      console.error(errors);
       swal("Error!", msg, "error");
     } else {
       swal("Correcto!", msg, "success").then(() => {
@@ -43,10 +43,7 @@ const FormUser = ({ initialValues = {}, auth }) => {
       });
     }
   };
-  React.useEffect(() => {
-    const userRole = localStorage.getItem('user_role')
-    if (userRole === 'ADMIN') setIsAdmin(true);
-  },[]);
+
   return (
     <form name="form" onSubmit={handleSubmit}>
       <div className="form-group">
