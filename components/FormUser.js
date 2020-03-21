@@ -21,7 +21,7 @@ const FormUser = ({ initialValues = {}, auth }) => {
         ...form.fields
       })
     };
-    console.log(options)
+    console.log(options);
     const res = await fetch("https://etl-auth.herokuapp.com/api/v1/user/", {
       headers,
       ...options
@@ -71,8 +71,11 @@ const FormUser = ({ initialValues = {}, auth }) => {
       <div className="form-group">
         <label htmlFor="role">Rol</label>
         <select className="form-control" {...form.getSelect("role")} required>
-          <option selected="selected">BOSS</option>
-          <option>EMPLOYEE</option>
+          <option value="" selected>
+            Seleccione
+          </option>
+          <option value="BOSS">BOSS</option>
+          <option value="EMPLOYEE">EMPLOYEE</option>
         </select>
       </div>
 
