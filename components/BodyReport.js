@@ -61,8 +61,8 @@ BodyReport.propTypes = {
 
 BodyReport.defaultProps = {
   data: {
-    company: "Azordev",
-    client: "Israel Silupu Maza",
+    company: "nisira",
+    client: "Walter",
     reportId: "00001",
     items: "2k arroz * 5 = 10",
     total: "64.00",

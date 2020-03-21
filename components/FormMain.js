@@ -184,7 +184,7 @@ FormMain.propTypes = {
 
 FormMain.defaultProps = {
   invoice: {
-    company: "Azordev",
+    company: "nisira",
     client: "Walter Flores Neciosup",
     reportId: "00001",
     items: "2k arroz * 5 = 10",
