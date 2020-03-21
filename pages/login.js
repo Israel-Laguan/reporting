@@ -1,63 +1,61 @@
-import React from 'react';
-import Link from 'next/link';
-import withAuth from '../utils/withAuth';
-import Router from 'next/router';
-import swal from 'sweetalert';
+import React from "react";
+import Link from "next/link";
+import withAuth from "../utils/withAuth";
+import Router from "next/router";
+import swal from "sweetalert";
 
 class LoginPage extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       submitted: false,
-      msg: '',
+      msg: "",
       errors: [],
-      submitting: false,
-    }
+      submitting: false
+    };
 
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
-    const { name, value } = e.target
-    this.setState({ [name]: value })
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   }
 
   async handleSubmit(e) {
-    e.preventDefault()
-    this.setState({ ...this.state, submitting: true })
-    const { email, password } = this.state
+    e.preventDefault();
+    this.setState({ ...this.state, submitting: true });
+    const { email, password } = this.state;
     if (email && password) {
       const { success, msg, errors } = await this.props.auth.login(
         email,
-        password,
-      )
+        password
+      );
       if (!success) {
-        console.log('error', errors)
+        console.log("error", errors);
         this.setState({
           submitting: false,
           submitted: true,
-          email: '',
-          password: '',
           errors,
-          msg,
-        })
-        return errors.forEach(error => swal('Error!', error.msg, 'error'))
+          msg
+        });
+        return errors.forEach(error => swal("Error!", error.msg, "error"));
       }
-      return Router.push('/')
+      return Router.push("/");
     }
-    this.setState({ ...this.state, submitting: false })
-    return this.setState({ submitted: true, email: '', password: '' })
+    this.setState({ ...this.state, submitting: false });
+    return this.setState({ submitted: true, email: "", password: "" });
   }
 
   render() {
     const {
-      auth: { loggingIn },
-    } = this.props
-    const { email, password, submitted, submitting } = this.state
+      auth: { loggingIn }
+    } = this.props;
+    const { email, password, submitted, submitting } = this.state;
     return (
       <div className="jumbotron jumbotron-fluid">
         <div className="container">
@@ -66,7 +64,7 @@ class LoginPage extends React.Component {
             <form name="form" onSubmit={this.handleSubmit}>
               <div
                 className={
-                  'form-group' + (submitted && !email ? ' has-error' : '')
+                  "form-group" + (submitted && !email ? " has-error" : "")
                 }
               >
                 <label htmlFor="email">Email</label>
@@ -85,7 +83,7 @@ class LoginPage extends React.Component {
               </div>
               <div
                 className={
-                  'form-group' + (submitted && !password ? ' has-error' : '')
+                  "form-group" + (submitted && !password ? " has-error" : "")
                 }
               >
                 <label htmlFor="password">Contraseña</label>
@@ -95,6 +93,7 @@ class LoginPage extends React.Component {
                   name="password"
                   value={password}
                   onChange={this.handleChange}
+                  minlength="8"
                   required
                 />
                 {submitted && !password && (
@@ -123,8 +122,8 @@ class LoginPage extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default withAuth(LoginPage)
+export default withAuth(LoginPage);
