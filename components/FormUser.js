@@ -6,8 +6,7 @@ import withAuth from '../utils/withAuth'
 import swal from 'sweetalert'
 
 const FormUser = ({ initialValues = {}, auth }) => {
-  const [isAdmin, setIsAdmin] = React.useState(false)
-  const [isBoss, setIsBoss] = React.useState(false)
+  const [isAdmin, setIsAdmin] = React.useState(false);
   const form = useForm({ initialValues })
 
   const handleSubmit = async e => {
@@ -18,24 +17,20 @@ const FormUser = ({ initialValues = {}, auth }) => {
       'x-access-token': auth.getToken(),
     }
     const options = {
-      method: initialValues ? 'PUT' : 'POST',
+      method: initialValues.email ? 'PUT' : 'POST',
       body: JSON.stringify({
         ...form.fields,
       }),
     }
-    console.log(options)
     const res = await fetch(
-      `http://localhost:8000/api/v1/user/${
-        initialValues ? initialValues._id : ''
+      `https://etl-auth.herokuapp.com/api/v1/user/${
+        initialValues.email && initialValues._id 
       }`,
       {
         headers,
         ...options,
       },
-    ).then(res => {
-      console.info(res)
-      return res.json()
-    })
+    ).then(res =>  res.json())
     const { success, errors, msg } = res
     if (!success) {
       console.error(errors)
@@ -49,8 +44,7 @@ const FormUser = ({ initialValues = {}, auth }) => {
 
   React.useEffect(() => {
     const userRole = localStorage.getItem('user_role')
-    if (userRole === 'ADMIN') setIsAdmin(true)
-    if (userRole === 'BOSS') setIsBoss(true)
+    if (userRole === 'ADMIN') setIsAdmin(true);
   }, [])
 
   return (
