@@ -4,21 +4,35 @@ import { Jumbotron, Container } from "reactstrap";
 import Header from "../../components/Header";
 import FormUser from "../../components/FormUser";
 import withAuth from "../../utils/withAuth";
+import swal from "sweetalert";
 
 const EditUser = ({auth}) => {
   const router = useRouter();
   const { id } = router.query;
   const [user, setUser] = useState({});
 
-  React.useEffect(() => {
-    setUser({
-      id,
-      name: "Walter flores",
-      email: "flores@gmail.com",
-      password: "asdadadad",
-      rol: "ADMIN"
-    });
-  }, [id]);
+  React.useEffect( () => {
+    async function fetchUsers(){
+      const headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+      headers['x-access-token'] = auth.getToken();
+      const res = await fetch(`https://etl-auth.herokuapp.com/api/v1/user/${id}`, {headers})
+      const { success, errors, msg, data } = await res.json()
+      if (!success) {
+        swal("Error!", errors[0].message, "error");
+        return console.error(msg, errors);
+      }
+
+      setUser({
+        ...data,
+        id: data._id
+      })
+    }
+    fetchUsers();
+  }, []);
+
   return (
     <>
       <Header users createUser auth={auth}/>

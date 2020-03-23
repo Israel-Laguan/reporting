@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-import PropTypes from 'prop-types';
-import Router from "next/router";
-import swal from 'sweetalert';
+import PropTypes from 'prop-types'
+import Router from 'next/router'
+import swal from 'sweetalert'
 import {
   Collapse,
   Navbar,
@@ -22,18 +22,20 @@ const Header = ({
   auth,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [isBoss, setIsBoss] = React.useState(false)
   const toggle = () => setIsOpen(!isOpen)
 
   const logOut = () => {
-    auth.logout();
-    Router.push("/login");
+    auth.logout()
+    Router.push('/login')
   }
 
   React.useEffect(() => {
     const userRole = localStorage.getItem('user_role')
-    if (userRole === 'ADMIN') setIsAdmin(true);
-  },[]);
+    if (userRole === 'ADMIN') setIsAdmin(true)
+    if (userRole === 'BOSS') setIsBoss(true)
+  }, [])
   return (
     <div>
       <Navbar dark expand="md" style={{ backgroundColor: '#F56D03' }}>
@@ -64,6 +66,13 @@ const Header = ({
                 </Link>
               </NavItem>
             )}
+            {createUser && isBoss && (
+              <NavItem>
+                <Link href="/new-user" passHref>
+                  <NavLink>Crear Usuario</NavLink>
+                </Link>
+              </NavItem>
+            )}
             {users && isAdmin && (
               <NavItem>
                 <Link href="/users" passHref>
@@ -72,12 +81,19 @@ const Header = ({
               </NavItem>
             )}
             <NavItem>
-              <Button color='plain' onClick={() => swal(`Hola!`, 'Nos alegra que estes aca!', 'success')}>
-              Bienvenido!
+              <Button
+                color="plain"
+                onClick={() =>
+                  swal(`Hola!`, 'Nos alegra que estes aca!', 'success')
+                }
+              >
+                Bienvenido!
               </Button>
             </NavItem>
             <NavItem>
-              <Button color="danger" onClick={logOut}>Salir</Button>
+              <Button color="danger" onClick={logOut}>
+                Salir
+              </Button>
             </NavItem>
           </Nav>
         </Collapse>

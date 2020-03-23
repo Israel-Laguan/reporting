@@ -16,6 +16,8 @@ import {
 
 const BodyListReport = ({ data = [] }) => {
   const [modal, setModal] = useState(false);
+  const [isAdmin, setIsAdmin] = React.useState(false);
+  const [isBoss, setIsBoss] = React.useState(false);
 
   const toggle = () => setModal(!modal);
 
@@ -29,12 +31,21 @@ const BodyListReport = ({ data = [] }) => {
           <Link href="/report">
             <Button color="success">Ver</Button>
           </Link>{" "}
-          <Link href={`/edit-report/${report.invoiceId}`}>
+          {
+            isAdmin && <Link href={`/edit-report/${report.invoiceId}`}>
             <Button color="primary">Editar</Button>
-          </Link>{" "}
-          <Button color="danger" onClick={toggle}>
+          </Link>
+          }
+          {
+            isBoss && <Link href={`/edit-report/${report.invoiceId}`}>
+            <Button color="primary">Editar</Button>
+          </Link>
+          }
+          {
+            isAdmin && <Button color="danger" onClick={toggle}>
             Eliminar
           </Button>
+          }
           <Modal isOpen={modal} toggle={toggle}>
             <ModalHeader toggle={toggle}>Confirmar</ModalHeader>
             <ModalBody>
@@ -53,6 +64,12 @@ const BodyListReport = ({ data = [] }) => {
       </Row>
     </ListGroupItem>
   ));
+
+  React.useEffect(() => {
+    const userRole = localStorage.getItem('user_role')
+    if (userRole === 'ADMIN') setIsAdmin(true);
+    if (userRole === 'BOSS') setIsBoss(true);
+  },[]);
 
   return (
     <Jumbotron>

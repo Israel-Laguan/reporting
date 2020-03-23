@@ -16,12 +16,12 @@ const useForm = ({ initialValues }) => {
     fields,
     getInput: name => ({
       name,
-      value: fields[name],
+      defaultValue: fields[name],
       onChange
     }),
     getSelect: name => ({
       name,
-      value: fields[name],
+      defaultValue: fields[name],
       onChange
     })
   };

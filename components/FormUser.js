@@ -6,6 +6,8 @@ import withAuth from "../utils/withAuth";
 import swal from "sweetalert";
 
 const FormUser = ({ initialValues = {}, auth }) => {
+  const [isAdmin, setIsAdmin] = React.useState(false);
+  const [isBoss, setIsBoss] = React.useState(false);
   const form = useForm({ initialValues });
 
   const handleSubmit = async e => {
@@ -21,7 +23,6 @@ const FormUser = ({ initialValues = {}, auth }) => {
         ...form.fields
       })
     };
-    console.log(options);
     const res = await fetch("https://etl-auth.herokuapp.com/api/v1/user/", {
       headers,
       ...options
@@ -36,6 +37,12 @@ const FormUser = ({ initialValues = {}, auth }) => {
       });
     }
   };
+
+  React.useEffect(() => {
+    const userRole = localStorage.getItem('user_role')
+    if (userRole === 'ADMIN') setIsAdmin(true);
+    if (userRole === 'BOSS') setIsBoss(true);
+  },[]);
 
   return (
     <form name="form" onSubmit={handleSubmit}>
@@ -59,29 +66,29 @@ const FormUser = ({ initialValues = {}, auth }) => {
           required
         />
       </div>
-      <div className="form-group">
+      {
+        isBoss && <div className="form-group">
         <label htmlFor="password">Contraseña</label>
         <input
           type="password"
           className="form-control"
           {...form.getInput("password")}
-          minlength="8"
+          minLength="8"
           required
         />
       </div>
+      }
       <div className="form-group">
         <label htmlFor="role">Rol</label>
-        <select className="form-control" {...form.getSelect("role")} required>
-          <option value="" selected>
-            Seleccione
-          </option>
-          <option value="BOSS">BOSS</option>
-          <option value="EMPLOYEE">EMPLOYEE</option>
+        <select className="form-control" {...form.getSelect("role")} required defaultValue="EMPLOYEE">
+          {isAdmin && <option value="ADMIN">Administrador</option> }
+          {isAdmin && <option value="BOSS">Jefe</option>}
+          <option value="EMPLOYEE">Empleado</option>
         </select>
       </div>
 
       <div className="form-group d-flex justify-content-center">
-        <button className="btn btn-primary">Registrar</button>
+  <button className="btn btn-primary">{initialValues? 'Guardar' : 'Registrar'}</button>
         {"  "}
         <Link href="/report">
           <button className=" btn btn-secondary ml-3">Cancel</button>
