@@ -22,22 +22,22 @@ const BodyListReport = ({ data = [] }) => {
   const toggle = () => setModal(!modal);
 
   let reports = data.map(report => (
-    <ListGroupItem key={report.invoiceId}>
+    <ListGroupItem key={report.invoice_id}>
       <Row>
         <Col>
-          <p className="lead">{`${report.invoiceId} || ${report.client}`}</p>
+          <p className="lead">{`${report.invoice_id} || ${report.client}`}</p>
         </Col>
         <Col md={{ size: 4, offset: 2 }}>
-          <Link href="/report">
+          <Link href={`/report/${report.report_id}`}>
             <Button color="success">Ver</Button>
           </Link>{" "}
           {
-            isAdmin && <Link href={`/edit-report/${report.invoiceId}`}>
+            isAdmin && <Link href={`/edit-report/${report.report_id}`}>
             <Button color="primary">Editar</Button>
           </Link>
           }
           {
-            isBoss && <Link href={`/edit-report/${report.invoiceId}`}>
+            isBoss && <Link href={`/edit-report/${report.report_id}`}>
             <Button color="primary">Editar</Button>
           </Link>
           }
@@ -82,10 +82,10 @@ const BodyListReport = ({ data = [] }) => {
 BodyListReport.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      reportId: PropTypes.number.isRequired,
-      invoiceId: PropTypes.string.isRequired,
+      report_id: PropTypes.string.isRequired,
+      invoice_id: PropTypes.number.isRequired,
       client: PropTypes.string.isRequired,
-      lastUpdate: PropTypes.string.isRequired
+      updated_at: PropTypes.string.isRequired
     }).isRequired
   )
 };
