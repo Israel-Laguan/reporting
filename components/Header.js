@@ -47,7 +47,7 @@ const Header = ({
           <Nav className="ml-auto" navbar>
             {editReport && isAdmin && (
               <NavItem>
-                <Link href="/edit-report" passHref>
+                <Link href={`/edit-report/${editReport}`} passHref>
                   <NavLink>Editar</NavLink>
                 </Link>
               </NavItem>
