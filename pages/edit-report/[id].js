@@ -18,7 +18,7 @@ const Edit = ({auth}) => {
         'Content-Type': 'application/json',
       }
       headers['x-access-token'] = auth.getToken()
-      const res = await fetch(`http://localhost:8000/api/v1/report/${id}`, {
+      const res = await fetch(`https://etl-auth.herokuapp.com/api/v1/report/${id}`, {
         headers,
       })
       const { success, errors, msg, data } = await res.json()
@@ -26,6 +26,7 @@ const Edit = ({auth}) => {
         console.error(msg, errors)
         setErrors(errors)
       }
+      console.log(data)
       setReport(data[0])
     }
     if (id && id !== '0') fetchReports()
@@ -35,7 +36,7 @@ const Edit = ({auth}) => {
       <Header auth={auth}/>
       <Jumbotron fluid>
         <Container fluid>
-          <FormMain invoice={report} auth={auth}/>
+          <FormMain invoice={report} auth={auth} edit={true}/>
         </Container>
       </Jumbotron>
     </>
