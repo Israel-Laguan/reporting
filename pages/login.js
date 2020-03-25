@@ -36,7 +36,7 @@ class LoginPage extends React.Component {
         password
       );
       if (!success) {
-        console.log("error", errors);
+        console.error("error", errors);
         this.setState({
           submitting: false,
           submitted: true,
@@ -47,8 +47,7 @@ class LoginPage extends React.Component {
       }
       return Router.push("/");
     }
-    this.setState({ ...this.state, submitting: false });
-    return this.setState({ submitted: true, email: "", password: "" });
+    return this.setState({ ...this.state, submitting: false, submitted: true, email: "", password: "" });
   }
 
   render() {
@@ -93,7 +92,7 @@ class LoginPage extends React.Component {
                   name="password"
                   value={password}
                   onChange={this.handleChange}
-                  minlength="8"
+                  minLength="8"
                   required
                 />
                 {submitted && !password && (

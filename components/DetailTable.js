@@ -2,7 +2,7 @@ import React from "react";
 import { Table, Input } from "reactstrap";
 import PropTypes from "prop-types";
 
-const DetailTable = ({ items, tax, total }) => {
+const DetailTable = ({ items, total }) => {
   return (
     <Table dark>
       <thead>
@@ -17,25 +17,17 @@ const DetailTable = ({ items, tax, total }) => {
         <tr>
           <td>1</td>
           <td>
-            <Input type="textarea" name="items" id="items" value={items} />
+          {items}
           </td>
           <td></td>
           <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td>Tax</td>
-          <td>
-            <Input type="text" name="tax" id="tax" value={tax} />
-          </td>
         </tr>
         <tr>
           <td></td>
           <td></td>
           <td>Total</td>
           <td>
-            <Input type="text" name="total" id="total" value={total} />
+          {total}
           </td>
         </tr>
       </tbody>

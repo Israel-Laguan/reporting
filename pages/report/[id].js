@@ -1,14 +1,13 @@
-import React, {useState} from "react";
-import { Jumbotron, Container } from "reactstrap";
-import Header from "../../components/Header";
-import FormMain from "../../components/FormMain";
-import withAuth from "../../utils/withAuth";
+import React, { useState } from 'react'
+import Header from '../../components/Header'
+import BodyReport from '../../components/BodyReport'
+import withAuth from '../../utils/withAuth'
 import { useRouter } from 'next/router'
 
-const Edit = ({auth}) => {
+const Report = ({ auth }) => {
   const router = useRouter()
   const { id } = router.query
-  const [report, setReport] = useState([])
+  const [reports, setReports] = useState([])
   const [errors, setErrors] = useState([])
 
   React.useEffect(() => {
@@ -26,21 +25,17 @@ const Edit = ({auth}) => {
         console.error(msg, errors)
         setErrors(errors)
       }
-      console.log(data)
-      setReport(data[0])
+      setReports(data[0])
     }
     if (id && id !== '0') fetchReports()
   }, [id])
+
   return (
     <>
-      <Header auth={auth}/>
-      <Jumbotron fluid>
-        <Container fluid>
-          <FormMain invoice={report} auth={auth} edit={true}/>
-        </Container>
-      </Jumbotron>
+      <Header editReport={id} auth={auth} />
+      <BodyReport data={reports} />
     </>
-  );
-};
+  )
+}
 
-export default withAuth(Edit);
+export default withAuth(Report)

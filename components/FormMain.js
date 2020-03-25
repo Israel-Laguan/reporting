@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import {
   Button,
   Col,
@@ -8,67 +8,106 @@ import {
   FormGroup,
   Label,
   Input,
-  Table
-} from "reactstrap";
+  Table,
+} from 'reactstrap'
+import swal from 'sweetalert'
+import Router from 'next/router'
 
-const FormMain = ({ invoice = {} }) => {
-  const [client, setClient] = useState("");
-  const [company, setCompany] = useState("");
-  const [reportId, setReportId] = useState("");
-  const [items, setItems] = useState("");
-  const [total, setTotal] = useState("");
-  const [tax, setTax] = useState(0);
-  const [status, setStatus] = useState(false);
-  const [createdAt, setCreatedAt] = useState(null);
-  const [updatedAt, setUpdatedAt] = useState(null);
+const FormMain = ({ invoice = {}, auth, edit }) => {
+  const [client, setClient] = useState('')
+  const [company, setCompany] = useState('')
+  const [invoiceId, setInvoiceId] = useState('')
+  const [items, setItems] = useState('')
+  const [total, setTotal] = useState('')
+  const [status, setStatus] = useState(false)
+  const [createdAt, setCreatedAt] = useState(null)
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    const headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'x-access-token': auth.getToken(),
+    }
+    const options = {
+      method: edit ? 'PUT' : 'POST',
+      body: JSON.stringify({
+        company,
+        client,
+        items,
+        total,
+        status,
+      }),
+    }
+    const res = await fetch(
+      `https://etl-auth.herokuapp.com/api/v1/report/${
+        edit ? invoice.report_id : ''
+      }`,
+      {
+        headers,
+        ...options,
+      },
+    ).then(res => res.json())
+    const { success, errors, msg } = res
+    if (!success) {
+      console.error(errors)
+      swal('Error!', msg, 'error')
+    } else {
+      swal('Correcto!', msg, 'success').then(() => {
+        if (edit) {
+          Router.push(`/report/${invoice.report_id}`)
+        } else {
+          Router.push('/')
+        }
+      })
+    }
+  }
 
   const handleChange = (key, value) => {
     switch (key) {
-      case "company":
-        setCompany(value);
-        break;
-      case "client":
-        setClient(value);
-        break;
-      case "reportId":
-        setReportId(value);
-        break;
-      case "items":
-        setItems(value);
-        break;
-      case "total":
-        setTotal(value);
-        break;
-      case "tax":
-        setTax(value);
-        break;
-      case "status":
-        setStatus(value);
-        break;
-      case "updateAt":
-        setUpdatedAt(value);
-        break;
+      case 'company':
+        setCompany(value)
+        break
+      case 'client':
+        setClient(value)
+        break
+      case 'invoiceId':
+        setInvoiceId(value)
+        break
+      case 'items':
+        setItems(value)
+        break
+      case 'total':
+        setTotal(value)
+        break
+      case 'status':
+        setStatus(value)
+        break
+      case 'updateAt':
+        setUpdatedAt(value)
+        break
       default:
-        break;
+        break
     }
-  };
+  }
 
-  React.useEffect(() => {
-    setClient(invoice.client);
-    setCompany(invoice.company);
-    setReportId(invoice.reportId);
-    setItems(invoice.items);
-    setTotal(invoice.total);
-    setTax(invoice.tax);
-    setStatus(invoice.status);
-    setCreatedAt(invoice.createdAt);
-    setUpdatedAt(invoice.updatedAt);
-  }, [invoice]);
+  React.useLayoutEffect(() => {
+    console.log('hello', edit, invoice)
+    if (edit) {
+      setClient(invoice.client)
+      setCompany(invoice.company)
+      setInvoiceId(invoice.invoice_id)
+      setItems(invoice.items)
+      setTotal(invoice.total)
+      setStatus(invoice.status)
+      setCreatedAt(invoice.created_at)
+    }
+  }, [edit, invoice])
 
   return (
     <>
       <h2 className="display-4">{company}</h2>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Row form>
           <Col xs="12" md={{ size: 4 }}>
             <FormGroup>
@@ -77,18 +116,18 @@ const FormMain = ({ invoice = {} }) => {
                 type="text"
                 id="client"
                 placeholder="ingrese client"
-                value={client}
-                onChange={e => handleChange("client", e.target.value)}
+                defaultValue={client}
+                onChange={e => handleChange('client', e.target.value)}
               />
             </FormGroup>
           </Col>
           <Col xs="6" md={{ size: 3, offset: 2 }}>
             <FormGroup>
               <Label for="invoice">Factura N°</Label>
-              <h2 className="display-5">{reportId}</h2>
+              <h2 className="display-5">{invoiceId}</h2>
             </FormGroup>
           </Col>
-          <Col md={3} xs="6" style={{ textAlign: "center" }}>
+          <Col md={3} xs="6" style={{ textAlign: 'center' }}>
             <FormGroup>
               <Label for="fecha">Fecha</Label>
               <h2 className="display-5">{createdAt}</h2>
@@ -114,26 +153,12 @@ const FormMain = ({ invoice = {} }) => {
                       type="textarea"
                       name="items"
                       id="items"
-                      value={items}
-                      onChange={e => handleChange("items", e.target.value)}
+                      defaultValue={items}
+                      onChange={e => handleChange('items', e.target.value)}
                     />
                   </td>
                   <td></td>
                   <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td>Tax</td>
-                  <td>
-                    <Input
-                      type="text"
-                      name="items"
-                      id="items"
-                      value={tax}
-                      onChange={e => handleChange("items", e.target.value)}
-                    />
-                  </td>
                 </tr>
                 <tr>
                   <td></td>
@@ -144,8 +169,8 @@ const FormMain = ({ invoice = {} }) => {
                       type="text"
                       name="total"
                       id="total"
-                      value={total}
-                      onChange={e => handleChange("total", e.target.value)}
+                      defaultValue={total}
+                      onChange={e => handleChange('total', e.target.value)}
                     />
                   </td>
                 </tr>
@@ -157,18 +182,18 @@ const FormMain = ({ invoice = {} }) => {
           <Col xs={{ size: 4, offset: 8 }} md={{ size: 2, offset: 10 }}>
             <FormGroup check>
               <Label check>
-                <Input type="checkbox" checked={status} /> Pay
+                <Input type="checkbox" defaultChecked={status} /> Pay
               </Label>
             </FormGroup>
           </Col>
           <Col xs={{ size: 4, offset: 8 }} md={{ size: 2, offset: 10 }}>
-            <Button>Guardar</Button>
+            <Button>{edit ? 'Guardar' : 'Crear'}</Button>
           </Col>
         </Row>
       </Form>
     </>
-  );
-};
+  )
+}
 
 FormMain.propTypes = {
   company: PropTypes.string,
@@ -179,21 +204,21 @@ FormMain.propTypes = {
   tax: PropTypes.number,
   status: PropTypes.bool,
   createdAt: PropTypes.string,
-  updateAt: PropTypes.string
-};
+  updateAt: PropTypes.string,
+}
 
 FormMain.defaultProps = {
   invoice: {
-    company: "nisira",
-    client: "Walter Flores Neciosup",
-    reportId: "00001",
-    items: "2k arroz * 5 = 10",
-    total: "64.00",
-    tax: "0",
+    company: 'nisira',
+    client: 'Walter Flores Neciosup',
+    report_id: '00001',
+    invoice_id: 0,
+    items: '2k arroz * 5 = 10',
+    total: '64.00',
     status: false,
-    createdAt: "17/03/2020",
-    updatedAt: "17/03/2020"
-  }
-};
+    created_at: '17/03/2020',
+    updated_at: '17/03/2020',
+  },
+}
 
-export default FormMain;
+export default FormMain
