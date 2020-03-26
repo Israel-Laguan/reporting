@@ -10,7 +10,7 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Button,
+  Button, Container
 } from 'reactstrap'
 
 const Header = ({
@@ -37,8 +37,8 @@ const Header = ({
     if (userRole === 'BOSS') setIsBoss(true)
   }, [])
   return (
-    <div>
-      <Navbar dark expand="md" style={{ backgroundColor: '#F56D03' }}>
+    <Container style={{ backgroundColor: '#F56D03'}} fluid>
+      <Navbar dark expand="md" style={{ maxWidth: 1200, margin: '0 auto' }}>
         <Link href="/" passHref>
           <a className="navbar-brand">Reporte</a>
         </Link>
@@ -98,7 +98,7 @@ const Header = ({
           </Nav>
         </Collapse>
       </Navbar>
-    </div>
+    </Container>
   )
 }
 Header.propTypes = {

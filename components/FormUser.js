@@ -5,8 +5,8 @@ import useForm from '../utilities/useForm'
 import withAuth from '../utils/withAuth'
 import swal from 'sweetalert'
 
-const FormUser = ({ initialValues = {}, auth }) => {
-  const [isAdmin, setIsAdmin] = React.useState(false);
+const FormUser = ({ initialValues = {}, auth, edit }) => {
+  const [isAdmin, setIsAdmin] = React.useState(false)
   const form = useForm({ initialValues })
 
   const handleSubmit = async e => {
@@ -17,20 +17,20 @@ const FormUser = ({ initialValues = {}, auth }) => {
       'x-access-token': auth.getToken(),
     }
     const options = {
-      method: initialValues.email ? 'PUT' : 'POST',
+      method: edit ? 'PUT' : 'POST',
       body: JSON.stringify({
         ...form.fields,
       }),
     }
-    const res = await fetch(
-      `https://etl-auth.herokuapp.com/api/v1/user/${
-        initialValues.email && initialValues._id 
-      }`,
-      {
-        headers,
-        ...options,
-      },
-    ).then(res =>  res.json())
+    console.log(options)
+    const url = edit
+      ? `https://etl-auth.herokuapp.com/api/v1/user/${initialValues.email &&
+          initialValues._id}`
+      : 'https://etl-auth.herokuapp.com/api/v1/user'
+    const res = await fetch(url, {
+      headers,
+      ...options,
+    }).then(res => res.json())
     const { success, errors, msg } = res
     if (!success) {
       console.error(errors)
@@ -44,7 +44,7 @@ const FormUser = ({ initialValues = {}, auth }) => {
 
   React.useEffect(() => {
     const userRole = localStorage.getItem('user_role')
-    if (userRole === 'ADMIN') setIsAdmin(true);
+    if (userRole === 'ADMIN') setIsAdmin(true)
   }, [])
 
   return (
