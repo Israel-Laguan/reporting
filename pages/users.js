@@ -61,6 +61,9 @@ const Users = ({ auth, list = [] }) => {
           <ListGroup>{renderUsers}</ListGroup>
         </Container>
       </Jumbotron>
+      <Link href={`/`}>
+        <Button className="ml-5 mb-5" color="primary" size="lg">🔙 Volver</Button>
+      </Link>{' '}
     </>
   )
 }

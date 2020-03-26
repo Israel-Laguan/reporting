@@ -99,7 +99,7 @@ const FormUser = ({ initialValues = {}, auth }) => {
           {initialValues ? 'Guardar' : 'Registrar'}
         </button>
         {'  '}
-        <Link href="/report">
+        <Link href="/">
           <button className=" btn btn-secondary ml-3">Cancel</button>
         </Link>
       </div>

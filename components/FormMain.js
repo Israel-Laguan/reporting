@@ -15,6 +15,7 @@ import Router from 'next/router'
 
 const FormMain = ({ invoice = {}, auth, edit }) => {
   const [client, setClient] = useState('')
+  const [havePrice, setHavePrice] = useState(false)
   const [company, setCompany] = useState('')
   const [invoiceId, setInvoiceId] = useState('')
   const [items, setItems] = useState('')
@@ -24,15 +25,19 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
 
   const handleSubmit = async e => {
     e.preventDefault()
+
+
+    console.log(havePrice);
     const headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       'x-access-token': auth.getToken(),
-    }
+    }    
     const options = {
       method: edit ? 'PUT' : 'POST',
       body: JSON.stringify({
         company,
+        havePrice,
         client,
         items,
         total,
@@ -67,6 +72,9 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
     switch (key) {
       case 'company':
         setCompany(value)
+        break
+      case 'havePrice':
+        setHavePrice(value)
         break
       case 'client':
         setClient(value)
@@ -123,7 +131,7 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
           </Col>
           <Col xs="6" md={{ size: 3, offset: 2 }}>
             <FormGroup>
-              <Label for="invoice">Factura N°</Label>
+              <Label for="invoice">Registro N°</Label>
               <h2 className="display-5">{invoiceId}</h2>
             </FormGroup>
           </Col>
@@ -141,8 +149,6 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
                 <tr>
                   <th>N°</th>
                   <th>Descripcion</th>
-                  <th>P.U.</th>
-                  <th>Total</th>
                 </tr>
               </thead>
               <tbody>
@@ -157,37 +163,47 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
                       onChange={e => handleChange('items', e.target.value)}
                     />
                   </td>
-                  <td></td>
-                  <td></td>
+                  <td></td>                                                      
                 </tr>
                 <tr>
-                  <td></td>
-                  <td></td>
-                  <td>Total</td>
+                  <td>                  
+                  </td>
                   <td>
-                    <Input
-                      type="text"
-                      name="total"
-                      id="total"
-                      defaultValue={total}
-                      onChange={e => handleChange('total', e.target.value)}
-                    />
+                  <span className="mr-3">
+                Total
+              </span>
+                  <Input
+                    type="text"
+                    name="total"
+                    id="total"
+                    defaultValue={total}
+                    onChange={e => handleChange('total', e.target.value)}
+                    disabled={!havePrice}
+                  />
+
                   </td>
                 </tr>
               </tbody>
-            </Table>
+            </Table>                  
           </Col>
         </Row>
         <Row>
-          <Col xs={{ size: 4, offset: 8 }} md={{ size: 2, offset: 10 }}>
-            <FormGroup check>
-              <Label check>
-                <Input type="checkbox" defaultChecked={status} /> Pay
-              </Label>
+          <Col xs={{ size: 4, offset: 6 }} md={{ size: 2, offset: 9 }}>
+            <FormGroup check className="my-3">              
+                <Input
+                  type="checkbox"
+                  name="havePrice"
+                  id="havePrice"
+                  defaultValue={havePrice}
+                  onChange={e => handleChange('havePrice', e.target.checked)}
+                />
+              <label htmlFor="havePrice">
+                Añadir precio
+              </label>
             </FormGroup>
           </Col>
-          <Col xs={{ size: 4, offset: 8 }} md={{ size: 2, offset: 10 }}>
-            <Button>{edit ? 'Guardar' : 'Crear'}</Button>
+          <Col xs={{ size: 4, offset: 7 }} md={{ size: 2, offset: 9 }}>
+            <Button >{edit ? 'Guardar' : 'Crear'}</Button>
           </Col>
         </Row>
       </Form>
@@ -197,6 +213,7 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
 
 FormMain.propTypes = {
   company: PropTypes.string,
+  havePrice: PropTypes.bool,
   client: PropTypes.string,
   reportId: PropTypes.string,
   items: PropTypes.string,
@@ -210,6 +227,7 @@ FormMain.propTypes = {
 FormMain.defaultProps = {
   invoice: {
     company: 'nisira',
+    havePrice: false,
     client: 'Walter Flores Neciosup',
     report_id: '00001',
     invoice_id: 0,
