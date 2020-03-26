@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import {
   Button,
   Col,
@@ -8,19 +8,19 @@ import {
   FormGroup,
   Label,
   Input,
-  Table,
-} from 'reactstrap'
+  Table
+} from "reactstrap";
 import swal from 'sweetalert'
 import Router from 'next/router'
 
-const FormMain = ({ invoice = {}, auth, edit }) => {
-  const [client, setClient] = useState('')
-  const [company, setCompany] = useState('')
-  const [invoiceId, setInvoiceId] = useState('')
-  const [items, setItems] = useState('')
-  const [total, setTotal] = useState('')
-  const [status, setStatus] = useState(false)
-  const [createdAt, setCreatedAt] = useState(null)
+const FormMain = ({ invoice = {}, auth }) => {
+  const [client, setClient] = useState("");
+  const [company, setCompany] = useState("");
+  const [invoiceId, setInvoiceId] = useState("");
+  const [items, setItems] = useState("");
+  const [total, setTotal] = useState("");
+  const [status, setStatus] = useState(false);
+  const [createdAt, setCreatedAt] = useState(null);
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -30,79 +30,72 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
       'x-access-token': auth.getToken(),
     }
     const options = {
-      method: edit ? 'PUT' : 'POST',
+      method: 'PUT',
       body: JSON.stringify({
         company,
         client,
         items,
         total,
-        status,
+        status
       }),
     }
     const res = await fetch(
-      `https://etl-auth.herokuapp.com/api/v1/report/${
-        edit ? invoice.report_id : ''
+      `http://localhost:8000/api/v1/report/${
+        invoice.report_id
       }`,
       {
         headers,
         ...options,
       },
-    ).then(res => res.json())
+    ).then(res =>  res.json())
     const { success, errors, msg } = res
     if (!success) {
       console.error(errors)
       swal('Error!', msg, 'error')
     } else {
       swal('Correcto!', msg, 'success').then(() => {
-        if (edit) {
-          Router.push(`/report/${invoice.report_id}`)
-        } else {
-          Router.push('/')
-        }
+        Router.push(`/report/${invoice.report_id}`)
       })
     }
   }
 
   const handleChange = (key, value) => {
     switch (key) {
-      case 'company':
-        setCompany(value)
-        break
-      case 'client':
-        setClient(value)
-        break
-      case 'invoiceId':
-        setInvoiceId(value)
-        break
-      case 'items':
-        setItems(value)
-        break
-      case 'total':
-        setTotal(value)
-        break
-      case 'status':
-        setStatus(value)
-        break
-      case 'updateAt':
-        setUpdatedAt(value)
-        break
+      case "company":
+        setCompany(value);
+        break;
+      case "client":
+        setClient(value);
+        break;
+      case "invoiceId":
+        setInvoiceId(value);
+        break;
+      case "items":
+        setItems(value);
+        break;
+      case "total":
+        setTotal(value);
+        break;
+      case "status":
+        setStatus(value);
+        break;
+      case "updateAt":
+        setUpdatedAt(value);
+        break;
       default:
-        break
+        break;
     }
-  }
+  };
 
-  React.useLayoutEffect(() => {
-    console.log('hello', edit, invoice)
-    if (edit) {
-      setClient(invoice.client)
-      setCompany(invoice.company)
-      setInvoiceId(invoice.invoice_id)
-      setItems(invoice.items)
-      setTotal(invoice.total)
-      setStatus(invoice.status)
-      setCreatedAt(invoice.created_at)
-    }
-  }, [edit, invoice])
+  React.useEffect(() => {
+    setClient(invoice.client);
+    setCompany(invoice.company);
+    setInvoiceId(invoice.invoice_id);
+    setItems(invoice.items);
+    setTotal(invoice.total);
+    setStatus(invoice.status);
+    setCreatedAt(invoice.created_at);
+  }, [invoice]);
 
   return (
     <>
@@ -117,7 +110,7 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
                 id="client"
                 placeholder="ingrese client"
                 defaultValue={client}
-                onChange={e => handleChange('client', e.target.value)}
+                onChange={e => handleChange("client", e.target.value)}
               />
             </FormGroup>
           </Col>
@@ -127,7 +120,7 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
               <h2 className="display-5">{invoiceId}</h2>
             </FormGroup>
           </Col>
-          <Col md={3} xs="6" style={{ textAlign: 'center' }}>
+          <Col md={3} xs="6" style={{ textAlign: "center" }}>
             <FormGroup>
               <Label for="fecha">Fecha</Label>
               <h2 className="display-5">{createdAt}</h2>
@@ -154,7 +147,7 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
                       name="items"
                       id="items"
                       defaultValue={items}
-                      onChange={e => handleChange('items', e.target.value)}
+                      onChange={e => handleChange("items", e.target.value)}
                     />
                   </td>
                   <td></td>
@@ -170,7 +163,7 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
                       name="total"
                       id="total"
                       defaultValue={total}
-                      onChange={e => handleChange('total', e.target.value)}
+                      onChange={e => handleChange("total", e.target.value)}
                     />
                   </td>
                 </tr>
@@ -187,13 +180,13 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
             </FormGroup>
           </Col>
           <Col xs={{ size: 4, offset: 8 }} md={{ size: 2, offset: 10 }}>
-            <Button>{edit ? 'Guardar' : 'Crear'}</Button>
+            <Button>Guardar</Button>
           </Col>
         </Row>
       </Form>
     </>
-  )
-}
+  );
+};
 
 FormMain.propTypes = {
   company: PropTypes.string,
@@ -204,21 +197,21 @@ FormMain.propTypes = {
   tax: PropTypes.number,
   status: PropTypes.bool,
   createdAt: PropTypes.string,
-  updateAt: PropTypes.string,
-}
+  updateAt: PropTypes.string
+};
 
 FormMain.defaultProps = {
   invoice: {
-    company: 'nisira',
-    client: 'Walter Flores Neciosup',
-    report_id: '00001',
+    company: "nisira",
+    client: "Walter Flores Neciosup",
+    report_id: "00001",
     invoice_id: 0,
-    items: '2k arroz * 5 = 10',
-    total: '64.00',
+    items: "2k arroz * 5 = 10",
+    total: "64.00",
     status: false,
-    created_at: '17/03/2020',
-    updated_at: '17/03/2020',
-  },
-}
+    created_at: "17/03/2020",
+    updated_at: "17/03/2020"
+  }
+};
 
-export default FormMain
+export default FormMain;

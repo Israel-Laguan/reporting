@@ -10,7 +10,7 @@ const New = ({auth}) => {
       <Header auth={auth}/>
       <Jumbotron fluid>
         <Container fluid>
-          <FormMain auth={auth}/>
+          <FormMain />
         </Container>
       </Jumbotron>
     </>

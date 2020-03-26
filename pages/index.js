@@ -13,7 +13,7 @@ const Home = ({auth}) => {
         'Content-Type': 'application/json',
       }
       headers['x-access-token'] = auth.getToken();
-      const res = await fetch('https://etl-auth.herokuapp.com/api/v1/report/all', {headers})
+      const res = await fetch('http://localhost:8000/api/v1/report/all', {headers})
       const { success, errors, msg, data } = await res.json()
       if (!success) {
         console.error(msg, errors)
@@ -27,7 +27,7 @@ const Home = ({auth}) => {
   return (
   <div>
     <Header createReport users auth={auth}/>
-    <BodyListReport data={reports} auth={auth}/>
+    <BodyListReport data={reports}/>
   </div>
 );}
 {
