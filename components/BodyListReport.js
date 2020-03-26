@@ -111,15 +111,5 @@ BodyListReport.propTypes = {
   ),
 }
 
-BodyListReport.defaultProps = {
-  data: [
-    {
-      report_id: '0',
-      invoice_id: 1,
-      client: "nisira",
-      updated_at: "16/03/2020"
-    },
-  ]
-};
 
 export default BodyListReport
