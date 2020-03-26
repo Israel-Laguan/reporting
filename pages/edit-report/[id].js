@@ -1,5 +1,6 @@
 import React, {useState} from "react";
-import { Jumbotron, Container } from "reactstrap";
+import Link from 'next/link'
+import { Jumbotron, Container, Button } from "reactstrap";
 import Header from "../../components/Header";
 import FormMain from "../../components/FormMain";
 import withAuth from "../../utils/withAuth";
@@ -37,6 +38,9 @@ const Edit = ({auth}) => {
         <Container fluid>
           <FormMain invoice={report} auth={auth} edit={true}/>
         </Container>
+        <Link href={`/`}>
+          <Button className="ml-5 mb-5 mt-5" color="primary" size="lg">🔙 Volver</Button>
+        </Link>{' '}
       </Jumbotron>
     </>
   );
