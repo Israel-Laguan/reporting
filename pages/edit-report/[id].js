@@ -26,7 +26,6 @@ const Edit = ({auth}) => {
         console.error(msg, errors)
         setErrors(errors)
       }
-      console.log(data)
       setReport(data[0])
     }
     if (id && id !== '0') fetchReports()

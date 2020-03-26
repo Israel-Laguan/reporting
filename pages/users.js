@@ -42,11 +42,9 @@ const Users = ({ auth, list = [] }) => {
             <p className="lead">{`${user.email} || ${user.name} (${user.role}) `}</p>
           </Col>
           <Col md={{ size: 2, offset: 4 }}>
-            <Link href="/edit-user/[id]" as={`/edit-user/${user._id}`} passHref>
-              <a type="button" className="btn btn-primary">
+              <a href={`/edit-user/${user._id}`} className="btn btn-primary">
                 Editar
               </a>
-            </Link>{' '}
           </Col>
         </Row>
       </ListGroupItem>

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import Link from 'next/link'
-import PropTypes from 'prop-types'
+import React, { useState } from "react";
+import Link from "next/link";
+import PropTypes from "prop-types";
 import {
   Jumbotron,
   Button,
@@ -11,16 +11,15 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
-} from 'reactstrap'
-import Router from 'next/router'
+  ModalFooter
+} from "reactstrap";
 
 const BodyListReport = ({ data = [], auth }) => {
-  const [modal, setModal] = useState(false)
-  const [isAdmin, setIsAdmin] = React.useState(false)
-  const [isBoss, setIsBoss] = React.useState(false)
+  const [modal, setModal] = useState(false);
+  const [isAdmin, setIsAdmin] = React.useState(false);
+  const [isBoss, setIsBoss] = React.useState(false);
 
-  const toggle = () => setModal(!modal)
+  const toggle = () => setModal(!modal);
 
   const deleteReport = async id => {
     const headers = {
@@ -33,7 +32,7 @@ const BodyListReport = ({ data = [], auth }) => {
       { headers, method: 'DELETE' },
     )
     if (!res.ok) {
-      console.error(res)
+      return console.error(res)
     }
     toggle()
     window.location.href = '/'
@@ -48,34 +47,31 @@ const BodyListReport = ({ data = [], auth }) => {
         <Col md={{ size: 4, offset: 2 }}>
           <Link href={`/report/${report.report_id}`}>
             <Button color="success">Ver</Button>
-          </Link>{' '}
-          {isAdmin && (
-            <Link href={`/edit-report/${report.report_id}`}>
-              <Button color="primary">Editar</Button>
-            </Link>
-          )}
-          {isBoss && (
-            <Link href={`/edit-report/${report.report_id}`}>
-              <Button color="primary">Editar</Button>
-            </Link>
-          )}
-          {isAdmin && (
-            <Button color="danger" onClick={toggle}>
-              Eliminar
-            </Button>
-          )}
+          </Link>{" "}
+          {
+            isAdmin && <Link href={`/edit-report/${report.report_id}`}>
+            <Button color="primary">Editar</Button>
+          </Link>
+          }
+          {
+            isBoss && <Link href={`/edit-report/${report.report_id}`}>
+            <Button color="primary">Editar</Button>
+          </Link>
+          }
+          {
+            isAdmin && <Button color="danger" onClick={toggle}>
+            Eliminar
+          </Button>
+          }
           <Modal isOpen={modal} toggle={toggle}>
             <ModalHeader toggle={toggle}>Confirmar</ModalHeader>
             <ModalBody>
               ¿Esta seguro que quiere eleminar este reporte?
             </ModalBody>
             <ModalFooter>
-              <Button
-                color="primary"
-                onClick={() => deleteReport(report.report_id)}
-              >
+              <Button color="primary" onClick={()=>deleteReport(report.report_id)}>
                 Aceptar
-              </Button>{' '}
+              </Button>{" "}
               <Button color="secondary" onClick={toggle}>
                 Cancel
               </Button>
@@ -84,21 +80,21 @@ const BodyListReport = ({ data = [], auth }) => {
         </Col>
       </Row>
     </ListGroupItem>
-  ))
+  ));
 
   React.useEffect(() => {
     const userRole = localStorage.getItem('user_role')
-    if (userRole === 'ADMIN') setIsAdmin(true)
-    if (userRole === 'BOSS') setIsBoss(true)
-  }, [])
+    if (userRole === 'ADMIN') setIsAdmin(true);
+    if (userRole === 'BOSS') setIsBoss(true);
+  },[]);
 
   return (
     <Jumbotron>
       <h3 className="display-4">Lista de Reportes</h3>
       <ListGroup>{reports}</ListGroup>
     </Jumbotron>
-  )
-}
+  );
+};
 
 BodyListReport.propTypes = {
   data: PropTypes.arrayOf(
@@ -106,9 +102,10 @@ BodyListReport.propTypes = {
       report_id: PropTypes.string.isRequired,
       invoice_id: PropTypes.number.isRequired,
       client: PropTypes.string.isRequired,
-      updated_at: PropTypes.string.isRequired,
-    }).isRequired,
-  ),
-}
+      updated_at: PropTypes.string.isRequired
+    }).isRequired
+  )
+};
+
 
 export default BodyListReport

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import {
   Button,
   Col,
@@ -8,8 +8,8 @@ import {
   FormGroup,
   Label,
   Input,
-  Table,
-} from 'reactstrap'
+  Table
+} from "reactstrap";
 import swal from 'sweetalert'
 import Router from 'next/router'
 
@@ -19,15 +19,13 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
   const [company, setCompany] = useState('')
   const [invoiceId, setInvoiceId] = useState('')
   const [items, setItems] = useState('')
-  const [total, setTotal] = useState('')
+  const [total, setTotal] = useState('0')
   const [status, setStatus] = useState(false)
   const [createdAt, setCreatedAt] = useState(null)
 
   const handleSubmit = async e => {
     e.preventDefault()
 
-
-    console.log(havePrice);
     const headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -37,26 +35,27 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
       method: edit ? 'PUT' : 'POST',
       body: JSON.stringify({
         company,
-        havePrice,
         client,
         items,
         total,
-        status,
+        status
       }),
     }
+    console.log(options)
+    const url = edit
+    ? `https://etl-auth.herokuapp.com/api/v1/report/${invoice.report_id}`
+    : 'https://etl-auth.herokuapp.com/api/v1/report'
     const res = await fetch(
-      `https://etl-auth.herokuapp.com/api/v1/report/${
-        edit ? invoice.report_id : ''
-      }`,
+      url,
       {
         headers,
         ...options,
       },
-    ).then(res => res.json())
+    ).then(res =>  res.json())
     const { success, errors, msg } = res
     if (!success) {
       console.error(errors)
-      swal('Error!', msg, 'error')
+      return swal('Error!', msg, 'error')
     } else {
       swal('Correcto!', msg, 'success').then(() => {
         if (edit) {
@@ -72,9 +71,6 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
     switch (key) {
       case 'company':
         setCompany(value)
-        break
-      case 'havePrice':
-        setHavePrice(value)
         break
       case 'client':
         setClient(value)
@@ -95,27 +91,37 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
         setUpdatedAt(value)
         break
       default:
-        break
+        break;
     }
-  }
+  };
 
-  React.useLayoutEffect(() => {
-    console.log('hello', edit, invoice)
-    if (edit) {
-      setClient(invoice.client)
-      setCompany(invoice.company)
-      setInvoiceId(invoice.invoice_id)
-      setItems(invoice.items)
-      setTotal(invoice.total)
-      setStatus(invoice.status)
-      setCreatedAt(invoice.created_at)
-    }
-  }, [edit, invoice])
+  React.useEffect(() => {
+    setClient(invoice.client);
+    setCompany(invoice.company);
+    setInvoiceId(invoice.invoice_id);
+    setItems(invoice.items);
+    setTotal(invoice.total);
+    setStatus(invoice.status);
+    setCreatedAt(invoice.created_at);
+  }, [invoice]);
 
   return (
     <>
-      <h2 className="display-4">{company}</h2>
       <Form onSubmit={handleSubmit}>
+        <Row>
+        <Col xs="12" md={{ size: 4 }}>
+            <FormGroup>
+              <Label for="company">Company</Label>
+              <Input
+                type="text"
+                id="company"
+                placeholder="ingrese Compañía"
+                defaultValue={company}
+                onChange={e => handleChange("company", e.target.value)}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
         <Row form>
           <Col xs="12" md={{ size: 4 }}>
             <FormGroup>
@@ -123,9 +129,9 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
               <Input
                 type="text"
                 id="client"
-                placeholder="ingrese client"
+                placeholder="ingrese cliente"
                 defaultValue={client}
-                onChange={e => handleChange('client', e.target.value)}
+                onChange={e => handleChange("client", e.target.value)}
               />
             </FormGroup>
           </Col>
@@ -135,7 +141,7 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
               <h2 className="display-5">{invoiceId}</h2>
             </FormGroup>
           </Col>
-          <Col md={3} xs="6" style={{ textAlign: 'center' }}>
+          <Col md={3} xs="6" style={{ textAlign: "center" }}>
             <FormGroup>
               <Label for="fecha">Fecha</Label>
               <h2 className="display-5">{createdAt}</h2>
@@ -160,7 +166,7 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
                       name="items"
                       id="items"
                       defaultValue={items}
-                      onChange={e => handleChange('items', e.target.value)}
+                      onChange={e => handleChange("items", e.target.value)}
                     />
                   </td>
                   <td></td>                                                      
@@ -178,7 +184,7 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
                     id="total"
                     defaultValue={total}
                     onChange={e => handleChange('total', e.target.value)}
-                    disabled={!havePrice}
+                    disabled={!status}
                   />
 
                   </td>
@@ -192,10 +198,10 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
             <FormGroup check className="my-3">              
                 <Input
                   type="checkbox"
-                  name="havePrice"
-                  id="havePrice"
-                  defaultValue={havePrice}
-                  onChange={e => handleChange('havePrice', e.target.checked)}
+                  name="status"
+                  id="status"
+                  defaultValue={status}
+                  onChange={e => handleChange('status', e.target.checked)}
                 />
               <label htmlFor="havePrice">
                 Añadir precio
@@ -208,8 +214,8 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
         </Row>
       </Form>
     </>
-  )
-}
+  );
+};
 
 FormMain.propTypes = {
   company: PropTypes.string,
@@ -221,8 +227,8 @@ FormMain.propTypes = {
   tax: PropTypes.number,
   status: PropTypes.bool,
   createdAt: PropTypes.string,
-  updateAt: PropTypes.string,
-}
+  updateAt: PropTypes.string
+};
 
 FormMain.defaultProps = {
   invoice: {
@@ -231,12 +237,12 @@ FormMain.defaultProps = {
     client: 'Walter Flores Neciosup',
     report_id: '00001',
     invoice_id: 0,
-    items: '2k arroz * 5 = 10',
-    total: '64.00',
+    items: "2k arroz * 5 = 10",
+    total: "64.00",
     status: false,
-    created_at: '17/03/2020',
-    updated_at: '17/03/2020',
-  },
-}
+    created_at: "17/03/2020",
+    updated_at: "17/03/2020"
+  }
+};
 
-export default FormMain
+export default FormMain;

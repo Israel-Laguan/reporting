@@ -12,7 +12,7 @@ const newUser = ({auth}) => {
       <Jumbotron fluid>
         <Container fluid>
           <div className="col-md-4 mx-auto">
-            <FormUser auth={auth} />
+            <FormUser auth={auth}/>
           </div>
         </Container>
       </Jumbotron>
