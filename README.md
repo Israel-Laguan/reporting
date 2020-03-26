@@ -14,6 +14,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 # Funciones de los Usuarios
 
+<<<<<<< HEAD
 Existe un Usuario con rol de Administrador creado desde la Base de Datos (BD). Para acceder a las credenciales contactarse con el desarrollador.
 
 ## Roles
@@ -35,6 +36,31 @@ Existen 3 roles:
 - Editar reporte.
 - Eliminar reporte.
 
+=======
+# Funciones de los Usuarios
+
+Existe un Usuario con rol de Administrador creado desde la Base de Datos (BD). Para acceder a las credenciales contactarse con el desarrollador.
+
+## Roles
+
+Existen 3 roles:
+
+- Administrador
+- Jefe
+- Empleado
+
+## Funciones del Administrador
+
+- Crear usuario con diferentes roles.
+- Ver lista de usuarios.
+- Editar usuarios.
+- Eliminar Usuarios.
+- Ver lista de reportes.
+- Crear reporte.
+- Editar reporte.
+- Eliminar reporte.
+
+>>>>>>> dd09a6b9a40755a58afab35745d243fe486c0c7d
 ## Funciones del Jefe
 
 - Crear usuario con rol Empleado
