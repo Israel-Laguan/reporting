@@ -14,17 +14,37 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `pages/home.js`. The page auto-updates as you edit the file.
 
-## Learn More
+# Funciones de los Usuarios
 
-To learn more about Next.js, take a look at the following resources:
+Existe un Usuario con rol de Administrador creado desde la Base de Datos (BD). Para acceder a las credenciales contactarse con el desarrollador.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Roles
 
-You can check out [the Next.js GitHub repository](https://github.com/zeit/next.js/) - your feedback and contributions are welcome!
+Existen 3 roles:
 
-## Deploy on ZEIT Now
+- Administrador
+- Jefe
+- Empleado
 
-The easiest way to deploy your Next.js app is to use the [ZEIT Now Platform](https://zeit.co/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Funciones del Administrador
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Crear usuario con diferentes roles.
+- Ver lista de usuarios.
+- Editar usuarios.
+- Eliminar Usuarios.
+- Ver lista de reportes.
+- Crear reporte.
+- Editar reporte.
+- Eliminar reporte.
+
+## Funciones del Jefe
+
+- Crear usuario con rol Empleado
+- Ver lista de usuarios.
+- Ver lista de reportes.
+- Crear reporte.
+- Editar reportes.
+
+## Funciones del Empleado
+
+- Crear reporte.
