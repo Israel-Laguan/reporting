@@ -1,30 +1,47 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import moment from 'moment'
+import swal from 'sweetalert'
+import Router from 'next/router'
 import {
   Button,
   Col,
   Row,
   Form,
   FormGroup,
+  Alert,
   Label,
   Input,
-  Table
-} from "reactstrap";
-import swal from 'sweetalert'
-import Router from 'next/router'
+  Table,
+} from 'reactstrap'
+import Validate from '../utils/Validate'
 
 const FormMain = ({ invoice = {}, auth, edit }) => {
   const [client, setClient] = useState('')
-  const [havePrice, setHavePrice] = useState(false)
   const [company, setCompany] = useState('')
   const [invoiceId, setInvoiceId] = useState('')
   const [items, setItems] = useState('')
-  const [total, setTotal] = useState('0')
+  const [total, setTotal] = useState('')
   const [status, setStatus] = useState(false)
   const [createdAt, setCreatedAt] = useState(null)
+  const [alertMessage, setAlertMessage] = useState('')
 
   const handleSubmit = async e => {
     e.preventDefault()
+    //Status define if this report is Report or Invoice
+    
+    let {band, msg:message} = Validate('client',client);
+    if(!band){
+      setAlertMessage(message);
+      return  setTimeout(()=>setAlertMessage(''),6000)
+    }
+    
+    let { band:bandD, msg:messageD } = Validate('description', items);
+
+    if(!bandD){
+      setAlertMessage(messageD);      
+      return setTimeout(()=>setAlertMessage(''),6000);
+    }
 
     const headers = {
       Accept: 'application/json',
@@ -38,24 +55,22 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
         client,
         items,
         total,
-        status
+        status,
       }),
     }
-    console.log(options)
-    const url = edit
-    ? `https://etl-auth.herokuapp.com/api/v1/report/${invoice.report_id}`
-    : 'https://etl-auth.herokuapp.com/api/v1/report'
     const res = await fetch(
-      url,
+      `https://etl-auth.herokuapp.com/api/v1/report/${
+        edit ? invoice.report_id : ''
+      }`,
       {
         headers,
         ...options,
       },
-    ).then(res =>  res.json())
+    ).then(res => res.json())
     const { success, errors, msg } = res
     if (!success) {
       console.error(errors)
-      return swal('Error!', msg, 'error')
+      swal('Error!', msg, 'error')
     } else {
       swal('Correcto!', msg, 'success').then(() => {
         if (edit) {
@@ -91,37 +106,29 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
         setUpdatedAt(value)
         break
       default:
-        break;
+        break
     }
-  };
+  }
 
-  React.useEffect(() => {
-    setClient(invoice.client);
-    setCompany(invoice.company);
-    setInvoiceId(invoice.invoice_id);
-    setItems(invoice.items);
-    setTotal(invoice.total);
-    setStatus(invoice.status);
-    setCreatedAt(invoice.created_at);
-  }, [invoice]);
+  React.useLayoutEffect(() => {
+    if (edit) {
+      setClient(invoice.client)
+      setCompany(invoice.company)
+      setInvoiceId(invoice.invoice_id)
+      setItems(invoice.items)
+      setTotal(invoice.total)
+      setStatus(invoice.status)
+      setCreatedAt(invoice.created_at)
+    }
+  }, [edit, invoice])
 
   return (
-    <>
-      <Form onSubmit={handleSubmit}>
-        <Row>
-        <Col xs="12" md={{ size: 4 }}>
-            <FormGroup>
-              <Label for="company">Company</Label>
-              <Input
-                type="text"
-                id="company"
-                placeholder="ingrese Compañía"
-                defaultValue={company}
-                onChange={e => handleChange("company", e.target.value)}
-              />
-            </FormGroup>
-          </Col>
-        </Row>
+    <div className="container">
+      <h2 className="text-center mb-3">Agregar un nuevo Reporte/Factura</h2>
+      <p className="text-center">En el siguiente apartado puede agregar un reporte detallado a nombre de un cliente</p>
+      <p className="text-center">Si ud. selecciona la opcion de agregar un precio el reporte sera considerado una factura</p>
+      <h2 className="display-4">{company}</h2>
+      <Form className="border p-5 mb-3 card" onSubmit={handleSubmit}>
         <Row form>
           <Col xs="12" md={{ size: 4 }}>
             <FormGroup>
@@ -129,9 +136,9 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
               <Input
                 type="text"
                 id="client"
-                placeholder="ingrese cliente"
+                placeholder="Nombre del cliente"
                 defaultValue={client}
-                onChange={e => handleChange("client", e.target.value)}
+                onChange={e => handleChange('client', e.target.value)}
               />
             </FormGroup>
           </Col>
@@ -141,10 +148,10 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
               <h2 className="display-5">{invoiceId}</h2>
             </FormGroup>
           </Col>
-          <Col md={3} xs="6" style={{ textAlign: "center" }}>
+          <Col md={3} xs="6" style={{ textAlign: 'center' }}>
             <FormGroup>
               <Label for="fecha">Fecha</Label>
-              <h2 className="display-5">{createdAt}</h2>
+              <h2 className="display-5">{createdAt ? createdAt : moment(Date.now()).format('MM Do YY')}</h2>
             </FormGroup>
           </Col>
         </Row>
@@ -166,7 +173,7 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
                       name="items"
                       id="items"
                       defaultValue={items}
-                      onChange={e => handleChange("items", e.target.value)}
+                      onChange={e => handleChange('items', e.target.value)}
                     />
                   </td>
                   <td></td>                                                      
@@ -179,7 +186,7 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
                 Total
               </span>
                   <Input
-                    type="text"
+                    type="number"
                     name="total"
                     id="total"
                     defaultValue={total}
@@ -203,23 +210,34 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
                   defaultValue={status}
                   onChange={e => handleChange('status', e.target.checked)}
                 />
-              <label htmlFor="havePrice">
+              <label htmlFor="status">
                 Añadir precio
               </label>
             </FormGroup>
+          </Col>
+          <Col>
+          
+          <div className="container">
+            <Alert className={`${alertMessage === '' ? 'd-none':null} py-3`} color="danger">
+              <p className="text-white text-center h5">
+                {alertMessage}
+              </p>
+            </Alert>
+          </div>
+          
+
           </Col>
           <Col xs={{ size: 4, offset: 7 }} md={{ size: 2, offset: 9 }}>
             <Button >{edit ? 'Guardar' : 'Crear'}</Button>
           </Col>
         </Row>
       </Form>
-    </>
-  );
-};
+    </div>
+  )
+}
 
 FormMain.propTypes = {
   company: PropTypes.string,
-  havePrice: PropTypes.bool,
   client: PropTypes.string,
   reportId: PropTypes.string,
   items: PropTypes.string,
@@ -227,22 +245,21 @@ FormMain.propTypes = {
   tax: PropTypes.number,
   status: PropTypes.bool,
   createdAt: PropTypes.string,
-  updateAt: PropTypes.string
-};
+  updateAt: PropTypes.string,
+}
 
 FormMain.defaultProps = {
   invoice: {
     company: 'nisira',
-    havePrice: false,
     client: 'Walter Flores Neciosup',
     report_id: '00001',
     invoice_id: 0,
-    items: "2k arroz * 5 = 10",
-    total: "64.00",
+    items: '2k arroz * 5 = 10',
+    total: '64.00',
     status: false,
-    created_at: "17/03/2020",
-    updated_at: "17/03/2020"
-  }
-};
+    created_at: '17/03/2020',
+    updated_at: '17/03/2020',
+  },
+}
 
-export default FormMain;
+export default FormMain

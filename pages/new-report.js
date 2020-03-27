@@ -12,12 +12,12 @@ const New = ({auth}) => {
       <Jumbotron fluid>
         <Container fluid>
           <FormMain auth={auth}/>
-        </Container>
+        </Container>      
+      <Link href={`/`}>
+        <Button className="ml-5 " color="primary" size="lg">🔙 Volver</Button>
+      </Link>{' '}
       </Jumbotron>
       
-      <Link href={`/`}>
-        <Button className="ml-5 mb-5" color="primary" size="lg">🔙 Volver</Button>
-      </Link>{' '}
     </>
   );
 };

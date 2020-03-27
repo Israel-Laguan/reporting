@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { Jumbotron, Container } from "reactstrap";
+import { Jumbotron, Container, Button } from "reactstrap";
 import Header from "../../components/Header";
 import FormUser from "../../components/FormUser";
 import withAuth from "../../utils/withAuth";
 import swal from "sweetalert";
+import Link from 'next/link'
 
 const EditUser = ({auth}) => {
   const router = useRouter();
@@ -22,7 +23,8 @@ const EditUser = ({auth}) => {
         const res = await fetch(`https://etl-auth.herokuapp.com/api/v1/user/${id}`, {headers})
         const { success, errors, msg, data } = await res.json()
         if (!success) {
-          swal("Error!", errors[0].message, "error");
+          swal("Error!", errors);
+          //swal("Error!", errors[0].message, "error");
           return console.error(msg, errors);
         }
   
@@ -44,6 +46,11 @@ const EditUser = ({auth}) => {
             <FormUser initialValues={user} edit={true}/>
           </div>
         </Container>
+        {
+        <Link href={`/`}>
+          <Button className="ml-5 mb-5 mt-5" color="primary" size="lg">🔙 Volver</Button>
+        </Link>
+        }
       </Jumbotron>
     </>
   );

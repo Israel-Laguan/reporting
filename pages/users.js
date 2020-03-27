@@ -2,12 +2,18 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import fetch from 'node-fetch'
 import Link from 'next/link'
+import { fetcher } from '../utils/fetcher'
 import {
   Jumbotron,
   Container,
   ListGroup,
   ListGroupItem,
+  Spinner,
   Button,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  ModalFooter,
   Row,
   Col,
 } from 'reactstrap'
@@ -15,6 +21,8 @@ import Header from '../components/Header'
 import withAuth from '../utils/withAuth'
 
 const Users = ({ auth, list = [] }) => {
+  const [load, setLoad] = useState(true)
+  const [modal, setModal] = useState(false)
   const [users, setUsers] = useState([])
   const [errors, setErrors] = useState([])
   React.useEffect( () => {
@@ -25,6 +33,7 @@ const Users = ({ auth, list = [] }) => {
       }
       headers['x-access-token'] = auth.getToken();
       const res = await fetch('https://etl-auth.herokuapp.com/api/v1/user/all', {headers})
+      setLoad(false)
       const { success, errors, msg, data } = await res.json()
       if (!success) {
         console.error(msg, errors)
@@ -34,19 +43,47 @@ const Users = ({ auth, list = [] }) => {
     }
     fetchUsers();
   }, [])
+  const toggle = () => setModal(!modal);
+  
+  const deleteUser = async (e,id)=>{
+    e.preventDefault();
+    console.log({id})
+    let res = await fetcher(`/user/${id}`,'DELETE');
+    window.location.reload();
+  }
   let renderUsers = users.map(user => {
     return (
       <ListGroupItem key={user._id}>
-        <Row>
+        <Row className="px-5">
           <Col>
             <p className="lead">{`${user.email} || ${user.name} (${user.role}) `}</p>
           </Col>
-          <Col md={{ size: 2, offset: 4 }}>
-              <a href={`/edit-user/${user._id}`} className="btn btn-primary">
+          <Col className="d-flex" md={{ size: 2, offset: 4 }}>
+              <a href={`/edit-user/${user._id}`} className="btn btn-outline-primary mr-3">
                 Editar
               </a>
-          </Col>
+              <a onClick={(e)=>toggle(e,user._id)} className="btn btn-outline-danger mr-3">
+                Eliminar
+              </a>
+          </Col>          
         </Row>
+        <Modal isOpen={modal} toggle={toggle}>
+              <ModalHeader toggle={toggle}>Confirmar</ModalHeader>
+              <ModalBody>
+                ¿Esta seguro que quiere eleminar este usuario?
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  color="primary"
+                  onClick={(e) => deleteUser(e,user._id)}
+                >
+                  Aceptar
+                </Button>{' '}
+                <Button color="secondary" onClick={toggle}>
+                  Cancel
+                </Button>
+              </ModalFooter>
+          </Modal>
       </ListGroupItem>
     )
   })
@@ -56,12 +93,20 @@ const Users = ({ auth, list = [] }) => {
       <Header createUser auth={auth}/>
       <Jumbotron fluid>
         <Container fluid>
-          <ListGroup>{renderUsers}</ListGroup>
+          {
+            load ? (
+              <div className="text-center">
+                <Spinner size="lg" color="primary" />
+              </div>
+            ):(
+              <ListGroup>{renderUsers}</ListGroup>
+            )            
+          }
         </Container>
+        <Link href={`/`}>
+          <Button className="ml-5 mb-5 mt-5" color="primary" size="lg">🔙 Volver</Button>
+        </Link>{' '}
       </Jumbotron>
-      <Link href={`/`}>
-        <Button className="ml-5 mb-5" color="primary" size="lg">🔙 Volver</Button>
-      </Link>{' '}
     </>
   )
 }
