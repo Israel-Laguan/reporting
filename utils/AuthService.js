@@ -15,8 +15,7 @@ export default class AuthService {
                 password
             })
         }).then(res => {
-            const {success, errors} = res;
-            if (!success) {
+            if (!res.ok) {
                 return res;
             }
             const { id, email, role, token} = res.data;
@@ -57,7 +56,7 @@ export default class AuthService {
 
     _checkStatus = (response) => {
         // raises an error in case response status is not a success
-        if (response.success || response.status >= 200 && response.status < 300) {
+        if (response.ok || response.status >= 200 && response.status < 300) {
             return response
         } else {
             console.error(response);

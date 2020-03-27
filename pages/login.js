@@ -32,11 +32,11 @@ class LoginPage extends React.Component {
     this.setState({ ...this.state, submitting: true });
     const { email, password } = this.state;
     if (email && password) {
-      const { success, msg, errors } = await this.props.auth.login(
+      const { ok, msg, errors } = await this.props.auth.login(
         email,
         password
       );
-      if (!success) {
+      if (!ok) {
         console.error("error", errors);
         this.setState({
           submitting: false,
@@ -52,9 +52,6 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    const {
-      auth: { loggingIn }
-    } = this.props;
     const { email, password, submitted, submitting } = this.state;
     return (
       <div className="jumbotron jumbotron-fluid">

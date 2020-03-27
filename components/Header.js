@@ -40,7 +40,7 @@ const Header = ({
     <Container style={{ backgroundColor: '#F56D03'}} fluid>
       <Navbar dark expand="md" style={{ maxWidth: 1200, margin: '0 auto' }}>
         <Link href="/" passHref>
-          <a className="navbar-brand">Reporte</a>
+          <a className="navbar-brand">🗒️ Reportes</a>
         </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -48,35 +48,35 @@ const Header = ({
             {editReport && isAdmin && (
               <NavItem>
                 <Link href={`/edit-report/${editReport}`} passHref>
-                  <NavLink>Editar</NavLink>
+                  <NavLink>✏️ Editar</NavLink>
                 </Link>
               </NavItem>
             )}
             {createReport && (
               <NavItem>
                 <Link href="/new-report" passHref>
-                  <NavLink>Crear Reporte</NavLink>
+                  <NavLink>📝 Crear Reporte</NavLink>
                 </Link>
               </NavItem>
             )}
             {createUser && isAdmin && (
               <NavItem>
                 <Link href="/new-user" passHref>
-                  <NavLink>Crear Usuario</NavLink>
+                  <NavLink>👤 Crear Usuario</NavLink>
                 </Link>
               </NavItem>
             )}
             {createUser && isBoss && (
               <NavItem>
                 <Link href="/new-user" passHref>
-                  <NavLink>Crear Usuario</NavLink>
+                  <NavLink>👤 Crear Usuario</NavLink>
                 </Link>
               </NavItem>
             )}
             {users && isAdmin && (
               <NavItem>
                 <Link href="/users" passHref>
-                  <NavLink>Lista de Usuarios</NavLink>
+                  <NavLink>📋 Lista de Usuarios</NavLink>
                 </Link>
               </NavItem>
             )}
@@ -84,7 +84,7 @@ const Header = ({
               <Button
                 color="plain"
                 onClick={() =>
-                  swal(`Hola!`, 'Nos alegra que estes aca!', 'success')
+                  swal(`🤗\nHola!`, 'Nos alegra que estes aca! ❤️', 'success')
                 }
               >
                 Bienvenido!
@@ -92,7 +92,7 @@ const Header = ({
             </NavItem>
             <NavItem>
               <Button color="danger" onClick={logOut}>
-                Salir
+              🚪 Salir
               </Button>
             </NavItem>
           </Nav>

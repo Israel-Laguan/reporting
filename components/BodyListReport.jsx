@@ -14,10 +14,9 @@ import {
   ModalBody,
   ModalFooter,
 } from 'reactstrap'
-import Router from 'next/router'
 
 const BodyListReport = ({ load, data = [], auth }) => {
-
+  const [userName, setUserName] = useState('')
   const [modal, setModal] = useState(false)
   const [isAdmin, setIsAdmin] = React.useState(false)
   const [isBoss, setIsBoss] = React.useState(false)
@@ -72,7 +71,7 @@ const BodyListReport = ({ load, data = [], auth }) => {
             <Modal isOpen={modal} toggle={toggle}>
               <ModalHeader toggle={toggle}>Confirmar</ModalHeader>
               <ModalBody>
-                ¿Esta seguro que quiere eleminar este reporte?
+                ¿Esta seguro que quiere eliminar este reporte?
               </ModalBody>
               <ModalFooter>
                 <Button
@@ -96,11 +95,13 @@ const BodyListReport = ({ load, data = [], auth }) => {
     const userRole = localStorage.getItem('user_role')
     if (userRole === 'ADMIN') setIsAdmin(true)
     if (userRole === 'BOSS') setIsBoss(true)
+    const user_email = localStorage.getItem('user_email')
+    if(user_email) setUserName(user_email)
   }, [])
 
   return (
     <Jumbotron>
-      <h3 className="display-4">Bienvenido a tu sistema</h3>
+      <h3 className="display-4">Bienvenido {userName}</h3>
       <div className="my-5">
         <h3>Reportes</h3>
         {
@@ -118,7 +119,7 @@ const BodyListReport = ({ load, data = [], auth }) => {
           <>
           <p>No se han encontrado reportes aún</p>
           <Link href={`/new-report`}>
-            <Button size="lg" color="success">+ Agrege una ahora</Button>        
+            <Button size="lg" color="success">+ Agrega una ahora</Button>        
           </Link>{' '}
           </>
           )
@@ -141,9 +142,9 @@ const BodyListReport = ({ load, data = [], auth }) => {
           invoices && invoices.length === 0 ?
           (
             <>
-            <p>No se han encontrado facutras aún</p>
+            <p>No se han encontrado facturas aún</p>
             <Link href={`/new-report`}>
-              <Button size="lg" color="success"> + Agrege una ahora</Button>
+              <Button size="lg" color="success"> + Agrega una ahora</Button>
             </Link>
             </>
             )

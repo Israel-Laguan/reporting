@@ -31,8 +31,8 @@ const FormUser = ({ initialValues = {}, auth, edit }) => {
       headers,
       ...options,
     }).then(res => res.json())
-    const { success, errors, msg } = res
-    if (!success) {
+    const { ok, errors, msg } = res
+    if (!ok) {
       console.error(errors)
       swal('Error!', msg, 'error')
     } else {

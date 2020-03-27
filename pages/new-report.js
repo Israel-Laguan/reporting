@@ -14,7 +14,7 @@ const New = ({auth}) => {
           <FormMain auth={auth}/>
         </Container>      
       <Link href={`/`}>
-        <Button className="ml-5 " color="primary" size="lg">🔙 Volver</Button>
+        <Button className="ml-5 " color="primary" size="lg">⬅️ Volver</Button>
       </Link>{' '}
       </Jumbotron>
       
