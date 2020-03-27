@@ -20,8 +20,8 @@ const Report = ({ auth }) => {
       const res = await fetch(`https://etl-auth.herokuapp.com/api/v1/report/${id}`, {
         headers,
       })
-      const { success, errors, msg, data } = await res.json()
-      if (!success) {
+      const { ok, errors, msg, data } = await res.json()
+      if (!ok) {
         console.error(msg, errors)
         setErrors(errors)
       }

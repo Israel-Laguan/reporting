@@ -22,9 +22,9 @@ const fetcher = async (url, method = 'GET', data = {})=>{
 
         if(method !== 'DELETE' && method !== 'PUT'){
             console.log("Ahhhhhh")
-            let { success, errors, msg, data } = await res.json();   
-            console.log("Fetch Response:",{ success, errors, msg, data });        
-            return { success, errors, msg, data };
+            let { ok, errors, msg, data } = await res.json();   
+            console.log("Fetch Response:",{ ok, errors, msg, data });        
+            return { ok, errors, msg, data };
         }
         
         console.log("RESSS",res)

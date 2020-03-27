@@ -22,10 +22,10 @@ const Edit = ({auth}) => {
       const res = await fetch(`https://etl-auth.herokuapp.com/api/v1/report/${id}`, {
         headers,
       })
-      const { success, errors, msg, data } = await res.json()
-      if (!success) {
+      const { ok, errors, msg, data } = await res.json()
+      if (!ok) {
         console.error(msg, errors)
-        setErrors(errors)
+        return setErrors(errors)
       }
       setReport(data[0])
     }
@@ -39,7 +39,7 @@ const Edit = ({auth}) => {
           <FormMain invoice={report} auth={auth} edit={true}/>
         </Container>
         <Link href={`/`}>
-          <Button className="ml-5 mb-5 mt-5" color="primary" size="lg">🔙 Volver</Button>
+          <Button className="ml-5 mb-5 mt-5" color="primary" size="lg">⬅️ Volver</Button>
         </Link>{' '}
       </Jumbotron>
     </>

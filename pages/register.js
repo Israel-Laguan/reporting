@@ -62,8 +62,8 @@ class RegisterPage extends React.Component {
           };
         return res.json();
       });
-      const { success, errors, msg, data } = res;
-      if (!success) {
+      const { ok, errors, msg, data } = res;
+      if (!ok) {
         swal("Error!", errors[0].msg, "error");
         this.setState({ ...this.state, registering: false });
       } else {

@@ -67,8 +67,8 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
         ...options,
       },
     ).then(res => res.json())
-    const { success, errors, msg } = res
-    if (!success) {
+    const { ok, errors, msg } = res
+    if (!ok) {
       console.error(errors)
       swal('Error!', msg, 'error')
     } else {
@@ -151,7 +151,7 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
           <Col md={3} xs="6" style={{ textAlign: 'center' }}>
             <FormGroup>
               <Label for="fecha">Fecha</Label>
-              <h2 className="display-5">{createdAt ? createdAt : moment(Date.now()).format('MM Do YY')}</h2>
+              <h2 className="display-5">{createdAt ? createdAt : moment(Date.now()).local().format('LL').toLocaleString()}</h2>
             </FormGroup>
           </Col>
         </Row>

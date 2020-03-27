@@ -40,7 +40,7 @@ const DetailTable = ({client, items, total, status }) => {
       </tbody>
     </Table>
     <Link href={`/`}>
-    <Button className="ml-5 mb-5 mt-5" color="primary" size="lg">🔙 Volver</Button>
+    <Button className="ml-5 mb-5 mt-5" color="primary" size="lg">⬅️ Volver</Button>
   </Link>{' '}
   </>
   );

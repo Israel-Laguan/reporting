@@ -18,7 +18,7 @@ const BodyReport = ({ data = {} }) => (
                 return false
               }}
             >
-              Imprimir
+              📃 Imprimir
             </Button>{' '}
           </div>
             
