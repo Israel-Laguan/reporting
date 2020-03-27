@@ -7,6 +7,8 @@ const BodyReport = ({ data = {} }) => (
     <>
       <Jumbotron fluid>
         <Container fluid>
+        <div className="container mb-5">
+          
           <div className="text-right">
             <Button
               color="info"
@@ -19,6 +21,9 @@ const BodyReport = ({ data = {} }) => (
               Imprimir
             </Button>{' '}
           </div>
+            
+
+            
           <Row>
             <Col className="mb-3">
               <h2 className="display-4">{data.company}</h2>
@@ -29,10 +34,11 @@ const BodyReport = ({ data = {} }) => (
               <h4 className="display-5 inline-block">{`Cliente: ${data.client}`}</h4>
             </Col>
             <Col xs="12" md="6">
-              <h4 className="display-5">Factura N°: {data.invoice_id}</h4>
+              <h4 className="display-5"> {data.status ? `Factura`:`Reporte`} N°: {data.invoice_id}</h4>
             </Col>
           </Row>
-          <DetailTable items={data.items} total={data.total} />
+          </div>
+          <DetailTable client={data.client} items={data.items} total={data.total} status={data.status} />
         </Container>
       </Jumbotron>
     </>

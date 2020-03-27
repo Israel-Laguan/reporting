@@ -1,21 +1,22 @@
 import React from "react";
 import { Table, Input } from "reactstrap";
-import PropTypes from "prop-types";
+import Link from 'next/link'
+import {Button} from 'reactstrap'
 
-const DetailTable = ({ items, total }) => {
+const DetailTable = ({client, items, total, status }) => {
   return (
-    <Table dark>
+    <>
+    <Table dark className="container">
       <thead>
-        <tr>
-          <th>N°</th>
+        <tr className="mb-5">
+          <th>Cliente</th>
           <th>Descripcion</th>
-          <th>P.U.</th>
-          <th>Total</th>
+          <th>{status?'Total':null} </th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>1</td>
+          <td>{client} </td>
           <td>
           {items}
           </td>
@@ -25,13 +26,23 @@ const DetailTable = ({ items, total }) => {
         <tr>
           <td></td>
           <td></td>
-          <td>Total</td>
+          {
+            console.log(status)
+          }
           <td>
-          {total}
+            {
+              status ? 'Total':null
+            }</td>
+          <td>
+          {status ? total : null}
           </td>
         </tr>
       </tbody>
     </Table>
+    <Link href={`/`}>
+    <Button className="ml-5 mb-5 mt-5" color="primary" size="lg">🔙 Volver</Button>
+  </Link>{' '}
+  </>
   );
 };
 
