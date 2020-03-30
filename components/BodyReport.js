@@ -21,8 +21,7 @@ const BodyReport = ({ data = {} }) => (
               📃 Imprimir
             </Button>{' '}
           </div>
-            
-
+          
             
           <Row>
             <Col className="mb-3">
