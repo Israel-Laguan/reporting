@@ -91,8 +91,15 @@ const Header = ({
               </Button>
             </NavItem>
             <NavItem>
+              <Link href="/instructions" passHref>
+                <NavLink className="btn btn-info btn-sm">
+                  ℹ️
+                </NavLink>
+              </Link>
+            </NavItem>
+            <NavItem>
               <Button color="danger" onClick={logOut}>
-              🚪 Salir
+                🚪 Salir
               </Button>
             </NavItem>
           </Nav>

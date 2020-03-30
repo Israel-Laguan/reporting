@@ -1,3 +1,7 @@
 button {
   display: none !important;
 }
+
+figure {
+  border: 1px solid gray;
+}

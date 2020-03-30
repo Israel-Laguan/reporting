@@ -4,13 +4,16 @@ import Router from 'next/router'
 import useForm from '../utilities/useForm'
 import withAuth from '../utils/withAuth'
 import swal from 'sweetalert'
+import {Spinner} from 'reactstrap'
 
 const FormUser = ({ initialValues = {}, auth, edit }) => {
   const [isAdmin, setIsAdmin] = React.useState(false)
+  const [load, setLoad] = React.useState(true)
   const form = useForm({ initialValues })
 
   const handleSubmit = async e => {
     e.preventDefault()
+    setLoad(true);
     const headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -22,7 +25,6 @@ const FormUser = ({ initialValues = {}, auth, edit }) => {
         ...form.fields,
       }),
     }
-    console.log(options)
     const url = edit
       ? `https://etl-auth.herokuapp.com/api/v1/user/${initialValues.email &&
           initialValues._id}`
@@ -95,8 +97,12 @@ const FormUser = ({ initialValues = {}, auth, edit }) => {
       </div>
 
       <div className="form-group d-flex justify-content-center">
-        <button className="btn btn-primary">
-          {initialValues ? 'Guardar' : 'Registrar'}
+        <button 
+          className="btn btn-primary"
+          disabled={load}
+        >          
+          <span className={load?null:'d-none'}>{initialValues ? 'Guardar' : 'Registrar'}</span>
+          <span className={load?'d-none':null}><Spinner size="sm" color="light" /></span>
         </button>
         {'  '}
         <Link href="/">
