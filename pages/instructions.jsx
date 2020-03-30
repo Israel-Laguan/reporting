@@ -14,6 +14,9 @@ const style = {
   justify: {
     textAlign: 'justify',
   },
+  figure: {
+    border: '1px solid gray',
+  },
 }
 
 const instructions = () => {
@@ -39,8 +42,7 @@ const instructions = () => {
             cotidiano del sistema
           </p>
           <p>
-            Este sistema tiene como finalidad el poder almacenar de forma
-            digital una serie de
+            Este sistema almacena de forma digital una serie de
             <span style={style.bold}>Reportes</span>y
             <span style={style.bold}>Facturas</span>
           </p>
@@ -59,10 +61,14 @@ const instructions = () => {
               <span style={{ ...style.bol, ...style.subr }}>
                 Sistema de autenticación y seguridad:
               </span>
+              <figure style={style.figure}>
+                <img src="/img/login.png" alt="Login" width="100%" />
+                <figcaption>Fig.1 - Vista de Ingreso</figcaption>
+              </figure>
               <ul style={style.justify}>
                 <li>
                   <p>
-                    EL sistema tiene un protocolo de autenticación protejido por
+                    EL sistema tiene un protocolo de autenticación protegido por
                     correo y contraseña, este es un método de autenticación
                     típico y bastante conocido para la mayoría de usuarios.
                   </p>
@@ -91,20 +97,19 @@ const instructions = () => {
                 <li>
                   El sistema esta basado también en un{' '}
                   <span style={style.bold}>
-                      <a
-                        href="https://es.reactjs.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        ReactJS
-                      </a>
-                    </span>{' '}
-                  framework que contiene
-                  una lógica que se encarga de vigilar constantemente los roles
-                  de usuario y de mostrar correctamente información
-                  correspondiente, permitiendo así que multiples usuarios de
-                  diversos niveles puedan acceder de manera discrimina a ciertas
-                  partes del sistema.
+                    <a
+                      href="https://es.reactjs.org/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      ReactJS
+                    </a>
+                  </span>{' '}
+                  framework que contiene una lógica que se encarga de vigilar
+                  constantemente los roles de usuario y de mostrar correctamente
+                  información correspondiente, permitiendo así que multiples
+                  usuarios de diversos niveles puedan acceder de manera
+                  discrimina a ciertas partes del sistema.
                 </li>
               </ul>
             </li>
@@ -112,6 +117,10 @@ const instructions = () => {
               <span style={{ ...style.bol, ...style.subr }}>
                 Sistema de registro:
               </span>
+              <figure style={style.figure}>
+                <img src="/img/register.png" alt="Register" width="100%" />
+                <figcaption>Fig.2 - Vista de Registro</figcaption>
+              </figure>
               <ul style={style.justify}>
                 <li>
                   Para registrar un usuario primero debe ingresar al sistema
@@ -140,7 +149,7 @@ const instructions = () => {
                 <li>
                   En este apartado es donde el administrador que registra
                   usuarios es capas de asignar un rol a nuevos usuario cuando lo
-                  registra, la importantencia del rol viene dada a que otorga
+                  registra, la importancia del rol viene dada a que otorga
                   acceso a ciertas partes del sistema que pueden o no manejar
                   información sensible para el dueño del sistema, de esta forma
                   podrá controlar que usuarios podran ver y manejar (o no) las
@@ -160,6 +169,10 @@ const instructions = () => {
               <span style={{ ...style.bol, ...style.subr }}>
                 La barra de navegación
               </span>
+              <figure style={style.figure}>
+                <img src="/img/nav.png" alt="Navbar" width="100%" />
+                <figcaption>Fig.3 - Vista de la Barra de Navegación</figcaption>
+              </figure>
               <p>
                 En la parte superior de la pantalla, el sistema siempre se
                 mantendrá mostrando una franja de color naranja la cual es
@@ -252,6 +265,236 @@ const instructions = () => {
                 eliminar a dicho usuario, estas opciones solo están disponibles
                 para usuarios con el rol de "administrador" y "Jefe".
               </p>
+            </li>
+          </ol>
+
+          <h1>Backend</h1>
+          <p>
+            Para usar este sistema en su empresa no son necesarios muchos pasos
+            pero si debe invertirse un poco de tiempo. Se recomiendan
+            conocimiento básico en javascript, manejo de redes, creación de
+            bases de datos (PostgresQL y Mongo), ademas de manejo de servidores.
+          </p>
+          <ol>
+            <li>
+              Crear dos (o mas) bases de datos para sus datos. Se espera que una
+              sea la Base de Datos y la otra un Data Warehouse. En este tutorial
+              asumiremos que tiene dos bases de datos en{' '}
+              <a
+                href="https://www.postgresql.org/docs/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                PostgresQL
+              </a>
+              . La forma mas fácil es usando es el{' '}
+              <a
+                href="https://devcenter.heroku.com/articles/heroku-postgresql"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                addon Postgres de Heroku
+              </a>
+              , pero puede ser cualquier base de datos postgres accesible
+              online.
+            </li>
+            <li>
+              <p>
+                Solicite al <a href="mailto:wfloresn1@upao.edu.pe">creador</a>{' '}
+                del software los archivos necesarios para el servidor, tanto de
+                la aplicación web como de autenticación. Luego instale ambos en
+                su servidor. Aca algunos tutoriales dependiendo el servidor que
+                tenga:
+              </p>
+              <ul>
+                <li>
+                  <a
+                    href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Heroku
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://aws.amazon.com/getting-started/projects/deploy-nodejs-web-app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Amazon AWS
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://features.cpanel.net/topic/nodejs-hosting"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    cPanel Hosting
+                  </a>
+                </li>
+                <li>... Para otros hará falta investigación.</li>
+              </ul>
+              <p>
+                Adicionalmente usted querrá hacer su propio servidor para
+                manejar datos de su empresa a su manera. Tal servidor lo
+                llamaremos "Su Servidor" en lo sucesivo. Nosotros esperamos que
+                su servidor tenga un endpoint graphql al que hacer queries.
+              </p>
+            </li>
+            <li>
+              <p>
+                El código del servidor para autenticación espera que usted
+                provea variables de entorno de la siguiente forma (sustituya las{' '}
+                <kbd>xxxx</kbd> por sus propias credenciales):
+              </p>
+              <kbd>MONGODB_URI=xxxxxx</kbd>
+              <br />
+              <kbd>OTHER_URL=xxxxx</kbd>
+              <br />
+              <p>
+                donde <kbd>OTHER_URL</kbd> se refiere al endpoint graphql del
+                servidor donde están sus datos. Tome en cuenta que este es un
+                ejemplo y puede hacer su servidor en cualquier tecnología que
+                desee, de esto hablaremos mas adelante.
+              </p>
+              <p>
+                para mas información sobre como asignar las variales de entorno
+                a su servidor consulte:
+              </p>
+            </li>
+            <li>
+              <p>
+                El código de la Aplicación web solo espera el link de servidor
+                online de autenticacion:
+              </p>
+              <kbd>AUTH_URL=https://xxxxxx</kbd>
+              <p>
+                Aplicar esto como variable de entorno es similar al numeral
+                anterior.
+              </p>
+            </li>
+            <li>
+              El ultimo paso es usar{' '}
+              <a
+                href="https://www.stitchdata.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Stitch
+              </a>
+              , un servicio ETL gratuito. Para mas detalles sobre como incluir
+              Stitch puede ver{' '}
+              <a
+                href="https://www.stitchdata.com/docs"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                aca
+              </a>
+            </li>
+          </ol>
+          <h2>
+            Ejemplo de Implementación con Heroku, Postgres, Mongo Atlas y Stitch
+          </h2>
+          <ol>
+            <li>
+              Primero crea una cuenta gratis en{' '}
+              <a
+                href="https://signup.heroku.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Heroku
+              </a>
+              ,{' '}
+              <a
+                href="https://www.stitchdata.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Stitch
+              </a>
+              , y en{' '}
+              <a
+                href="https://www.mongodb.com/cloud/atlas/register"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Mongo Atlas
+              </a>
+              .
+            </li>
+            <li>
+              Luego crea una app en Heroku desde tu usuario (mas información{' '}
+              <a
+                href="https://devcenter.heroku.com/articles/deploying-nodejs"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                la documentación
+              </a>
+              ).
+            </li>
+            <li>
+              Crea una base de datos en MongoDB para el servidor de
+              Autenticacion (
+              <a
+                href="https://docs.atlas.mongodb.com/getting-started/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                guía
+              </a>
+              ). También crea dos bases de datos para la app de Heroku siguiendo
+              esta{' '}
+              <a
+                href="https://devcenter.heroku.com/articles/heroku-postgresql"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                guía
+              </a>
+              <p>Videos de referencia:</p>
+              <ul>
+                <li>
+                  <iframe
+                    width="560"
+                    height="315"
+                    src="https://www.youtube.com/embed/WhKGkF6GoSw"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </li>
+                <li>
+                  <iframe
+                    width="560"
+                    height="315"
+                    src="https://www.youtube.com/embed/Imwk0HtEuGY"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </li>
+              </ul>
+            </li>
+            <li>
+              De vuelta a Stitch, sigue esta{' '}
+              <a
+                href="https://www.stitchdata.com/docs/getting-started/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                guía
+              </a>
+              .
+            </li>
+            <li>
+              Por ultimo entra a la aplicación web y crea un usuario de prueba
+              si el autor te ha dado un usuario o{' '}
+              <a href="mailto:wfloresn1@upao.edu.pe">solicitalo</a>.
             </li>
           </ol>
         </Container>
