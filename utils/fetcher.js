@@ -11,7 +11,7 @@ const fetcher = async (url, method = 'GET', data = {})=>{
             body = JSON.stringify(data)
           }
 
-          console.log(method)
+          console.log("Fetch Method: ",method)
           headers['x-access-token'] = localStorage.getItem('id_token');
 
         const res = await fetch(`https://etl-auth.herokuapp.com/api/v1${url}`, {
@@ -21,13 +21,12 @@ const fetcher = async (url, method = 'GET', data = {})=>{
         });           
 
         if(method !== 'DELETE' && method !== 'PUT'){
-            console.log("Ahhhhhh")
             let { ok, errors, msg, data } = await res.json();   
             console.log("Fetch Response:",{ ok, errors, msg, data });        
             return { ok, errors, msg, data };
         }
-        
-        console.log("RESSS",res)
+        console.log("Fetch Response",res)
+        return res;
         
 
     } catch (error) {

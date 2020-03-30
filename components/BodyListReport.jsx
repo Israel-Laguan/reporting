@@ -102,6 +102,10 @@ const BodyListReport = ({ load, data = [], auth }) => {
   return (
     <Jumbotron>
       <h3 className="display-4">Bienvenido {userName}</h3>
+      <Link href="/instructions">
+        <h4 className="my-3" style={{textDecoration:'underline', cursor:'pointer'}}>
+          Instrucciones</h4>
+      </Link>
       <div className="my-5">
         <h3>Reportes</h3>
         {

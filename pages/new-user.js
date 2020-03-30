@@ -1,5 +1,5 @@
 import React from "react";
-import { Jumbotron, Container } from "reactstrap";
+import { Jumbotron, Container, Button } from "reactstrap";
 import Link from 'next/link'
 import withAuth from "../utils/withAuth";
 import Header from "../components/Header";
@@ -15,6 +15,11 @@ const newUser = ({auth}) => {
             <FormUser auth={auth}/>
           </div>
         </Container>
+        <Link href={`/`}>
+          <Button className="ml-5 mb-5 mt-5" color="primary" size="lg">
+            ⬅️ Volver
+          </Button>
+        </Link>
       </Jumbotron>
     </>
   );

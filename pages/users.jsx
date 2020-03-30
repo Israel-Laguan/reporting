@@ -52,7 +52,8 @@ const Users = ({ auth, list = [] }) => {
   const deleteUser = async (e, id) => {
     e.preventDefault()
     console.log({ id })
-    let res = await fetcher(`/user/${id}`, 'DELETE')
+    let res = await fetcher(`/user/${id}`, 'DELETE')    
+    console.log("undefined ????",res)
     if (!res.ok) {
       return console.error(res.msg, res.errors)
     }
@@ -66,18 +67,22 @@ const Users = ({ auth, list = [] }) => {
             <p className="lead">{`${user.email} || ${user.name} (${user.role}) `}</p>
           </Col>
           <Col className="d-flex" md={{ size: 2, offset: 4 }}>
-            <a
-              href={`/edit-user/${user._id}`}
-              className="btn btn-outline-primary mr-3"
-            >
-              Editar
-            </a>
-            <a
-              onClick={e => toggle(e, user._id)}
-              className="btn btn-outline-danger mr-3"
-            >
-              Eliminar
-            </a>
+            <div>
+              <a
+                href={`/edit-user/${user._id}`}
+                className="btn btn-outline-primary mr-3"
+              >
+                Editar
+              </a>
+            </div>
+            <div>
+              <a
+                onClick={e => toggle(e, user._id)}
+                className="btn btn-outline-danger mr-3"
+              >
+                Eliminar
+              </a>
+            </div>
           </Col>
         </Row>
         <Modal isOpen={modal} toggle={toggle}>
