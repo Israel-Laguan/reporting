@@ -29,11 +29,26 @@ export default class AuthService {
         })
     }
 
-    loggedIn = () => {
+    loggedIn = async () => {
         // Checks if there is a saved token and it's still valid
         const token = this.getToken();
         if (!token) return false;
-        return true;
+        const id = localStorage.getItem('user_id');
+        if (id) {
+            const headers = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+            headers['x-access-token'] = this.getToken();
+
+            const res = await fetch(`https://etl-auth.herokuapp.com/api/v1/user/${id}`, {headers})
+                .then(res => {
+                    return res;
+                })
+                .catch(console.error);
+            if (res.status >= 400) return false;
+            return true;
+        }
     }
 
     setToken = (idToken) => {

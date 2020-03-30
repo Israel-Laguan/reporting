@@ -18,7 +18,8 @@ export default function withAuth(AuthComponent) {
 
         componentDidMount() {
             if (!Auth.loggedIn()) {
-                Router.push('/login');
+                console.log('bad')
+                return Router.push('/login');
             }
             this.setState({isLoading: false})
         }
