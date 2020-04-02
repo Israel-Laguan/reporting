@@ -80,6 +80,13 @@ const Header = ({
                 </Link>
               </NavItem>
             )}
+            {isAdmin || isBoss ?
+              <NavItem>
+              <Link href="/elt" passHref>
+                <NavLink>📚 ELT</NavLink>
+              </Link>
+            </NavItem>:null
+            }
             <NavItem>
               <Button
                 color="plain"
