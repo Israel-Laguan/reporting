@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import Router from "next/router";
 import Header from "../components/Header";
 import BodyListReport from "../components/BodyListReport";
 import withAuth from "../utils/withAuth";
@@ -6,7 +7,6 @@ import withAuth from "../utils/withAuth";
 const Home = ({auth}) => {
   const [load, setLoad] = useState(true);
   const [reports, setReports] = useState([])
-  const [errors, setErrors] = useState([])
   
   React.useLayoutEffect( () => {
     setLoad(true);
@@ -20,8 +20,9 @@ const Home = ({auth}) => {
       setLoad(false)
       const { ok, errors, msg, data } = await res.json()
       if (!ok) {
-        console.error(msg, errors)
-        return setErrors(errors)
+        console.error(auth,msg, errors)
+        auth.logout();
+        return Router.push('/login');
       }
       setReports(data)
     }
