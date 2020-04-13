@@ -17,7 +17,6 @@ const Header = ({
   editReport,
   createReport,
   createUser,
-  editUser,
   users,
   auth,
 }) => {
@@ -80,6 +79,13 @@ const Header = ({
                 </Link>
               </NavItem>
             )}
+            {isAdmin || isBoss ?
+              <NavItem>
+              <Link href="/elt" passHref>
+                <NavLink>📚 ETL</NavLink>
+              </Link>
+            </NavItem>:null
+            }
             <NavItem>
               <Button
                 color="plain"
