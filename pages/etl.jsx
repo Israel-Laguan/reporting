@@ -95,7 +95,7 @@ const ELT = props => {
       }
       headers['x-access-token'] = response.access_token
       const res = await fetch(
-        'http://etl-server.herokuapp.com/credentials',
+        'https://etl-server.herokuapp.com/credentials',
         { headers },
       )
       const { ok, errors, msg, data } = await res.json()
@@ -107,6 +107,7 @@ const ELT = props => {
 
       toggleCredentials();
     } catch (error) {
+      console.error(error)
       let msg = "Ocurrió un error inesperado, por favor, intente más tarde";
       swal("Error!", msg, "error");
     }

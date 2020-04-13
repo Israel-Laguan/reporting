@@ -32,7 +32,7 @@ const Home = ({auth}) => {
   return (
     
     <div>
-    <Header createReport users auth={auth}/>    
+    <Header createReport users etl auth={auth}/>    
     <BodyListReport load={load} data={reports} auth={auth}/>
     
     </div>
