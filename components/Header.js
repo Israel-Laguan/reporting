@@ -15,6 +15,7 @@ import {
 
 const Header = ({
   editReport,
+  etl,
   createReport,
   createUser,
   users,
@@ -79,9 +80,9 @@ const Header = ({
                 </Link>
               </NavItem>
             )}
-            {isAdmin || isBoss ?
-              <NavItem>
-              <Link href="/elt" passHref>
+            {(isAdmin && etl) || (isBoss && etl)?
+            <NavItem>
+              <Link href="/etl" passHref>
                 <NavLink>📚 ETL</NavLink>
               </Link>
             </NavItem>:null
