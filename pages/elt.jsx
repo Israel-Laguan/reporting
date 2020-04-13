@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Link from 'next/link'
 import Header from "../components/Header";
 import withAuth from "../utils/withAuth";
-import { fetcher } from "../utils/fetcher";
+import fetch from 'node-fetch'
 
 import {
   Jumbotron,
@@ -17,33 +17,33 @@ import swal from "sweetalert";
 
 //const style = {};
 
-const mockSumaryData = {
-  sumary1: "soy un sumary",
-  sumary2: "soy una sumary",
-  sumary3: "soy uno sumary",
-  sumary4: "soy une sumary",
-  sumary5: "soy unu sumary"
-};
+// const mockSumaryData = {
+//   sumary1: "soy un sumary",
+//   sumary2: "soy una sumary",
+//   sumary3: "soy uno sumary",
+//   sumary4: "soy une sumary",
+//   sumary5: "soy unu sumary"
+// };
 
 const ELT = props => {
   const [modalRepli, setModalRepli] = useState(false);
   const [modalCredentials, setModalCredentials] = useState(false);
   const [credentials, setCredentials] = useState(false);
-  const [sumary, setSumary] = useState(false);
+  // const [sumary, setSumary] = useState(false);
 
   const toggleRepli = () => setModalRepli(!modalRepli);
   const toggleCredentials = () => setModalCredentials(!modalCredentials);
 
-  useEffect(() => {
-    const getSumary = async () => {
-      const sumary = await fetcher("/sumary");
-      if (!sumary || !sumary.ok) {
-        return setSumary(Object.values(mockSumaryData));
-      }
-      setSumary(sumary.data);
-    };
-    getSumary();
-  }, []);
+  // useEffect(() => {
+  //   const getSumary = async () => {
+  //     const sumary = await fetcher("/sumary");
+  //     if (!sumary || !sumary.ok) {
+  //       return setSumary(Object.values(mockSumaryData));
+  //     }
+  //     setSumary(sumary.data);
+  //   };
+  //   getSumary();
+  // }, []);
 
   const getUserData = () => {
     const user_id = localStorage.getItem("user_id");
@@ -64,12 +64,22 @@ const ELT = props => {
   const handleRepliDW = async () => {
     const response = getUserData();
     try {
-      let res = await fetcher("/replicate-dw", "POST", response);
+      const headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+      headers['x-access-token'] = response.access_token
+      const res = await fetch(
+        'http://etl-server.herokuapp.com/export',
+        { method: 'PUT', headers },
+      )
+      const { ok, errors, msg, data } = await res.json()
+      if (!ok) {
+        console.error(msg, errors)
+        return swal('Error!', msg, 'error')
+      }
+      console.log(msg, data)
       toggleRepli();
-
-      if (!res.ok) throw new Error("Error al replicar DataWarehouse");
-
-      let msg = "Datos replicados en DataWarehause correctamente";
       swal("Correcto!", msg, "success");
     } catch (error) {
       let msg = "Ocurrió un error inesperado, por favor, intente más tarde";
@@ -79,11 +89,21 @@ const ELT = props => {
   const handleCredentials = async () => {
     const response = getUserData();
     try {
-      let res = await fetcher("/credentials", "POST", response);
-      if (!res || !res.ok) throw new Error("Error al cargar credenciales");
-
-      res = res ? res.data : res;
-      setCredentials(res);
+      const headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+      headers['x-access-token'] = response.access_token
+      const res = await fetch(
+        'http://etl-server.herokuapp.com/credentials',
+        { headers },
+      )
+      const { ok, errors, msg, data } = await res.json()
+      if (!ok) {
+        console.error(msg, errors)
+        return swal('Error!', msg, 'error')
+      }
+      setCredentials(data.DW);
 
       toggleCredentials();
     } catch (error) {
@@ -117,7 +137,7 @@ const ELT = props => {
           </div>
         </Container>
         <section className="mt-5 p-5">
-          <div>
+          {/* <div>
             {sumary
               ? sumary.map(e => (
                   <div>
@@ -125,7 +145,7 @@ const ELT = props => {
                   </div>
                 ))
               : null}
-          </div>
+          </div> */}
         <Link href={`/`}>
           <Button className="ml-5 mb-5 mt-5" color="primary" size="lg">
             ⬅️ Volver
@@ -174,8 +194,11 @@ const activeModalCredentials = (
         Estas son sus credenciales
       </ModalHeader>
       <ModalBody>
-        {Object.values(credentials).map((e, i) => {
-          return <p key={i}>{`Credencial ${i + 1}: ${e}`}</p>;
+        {Object.entries(credentials).map((pair, id) => {
+          return <div key={id}>
+            <h3>{pair[0]}:</h3>
+            <kbd>{pair[1]}</kbd>
+          </div>;
         })}
       </ModalBody>
       <ModalFooter>

@@ -17,7 +17,6 @@ const Header = ({
   editReport,
   createReport,
   createUser,
-  editUser,
   users,
   auth,
 }) => {
@@ -83,7 +82,7 @@ const Header = ({
             {isAdmin || isBoss ?
               <NavItem>
               <Link href="/elt" passHref>
-                <NavLink>📚 ELT</NavLink>
+                <NavLink>📚 ETL</NavLink>
               </Link>
             </NavItem>:null
             }
