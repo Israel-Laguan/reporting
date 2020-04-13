@@ -70,7 +70,7 @@ const ELT = props => {
       }
       headers['x-access-token'] = response.access_token
       const res = await fetch(
-        'http://etl-server.herokuapp.com/export',
+        'https://etl-server.herokuapp.com/export',
         { method: 'PUT', headers },
       )
       const { ok, errors, msg, data } = await res.json()
@@ -82,7 +82,7 @@ const ELT = props => {
       toggleRepli();
       swal("Correcto!", msg, "success");
     } catch (error) {
-      let msg = "Ocurrió un error inesperado, por favor, intente más tarde";
+      const msg = "Ocurrió un error inesperado, por favor, intente más tarde";
       swal("Error!", msg, "error");
     }
   };
@@ -108,7 +108,7 @@ const ELT = props => {
       toggleCredentials();
     } catch (error) {
       console.error(error)
-      let msg = "Ocurrió un error inesperado, por favor, intente más tarde";
+      const msg = "Ocurrió un error inesperado, por favor, intente más tarde";
       swal("Error!", msg, "error");
     }
   };
