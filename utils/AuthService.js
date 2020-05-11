@@ -1,7 +1,7 @@
 // utils/AuthService.js
 export default class AuthService {
     constructor(domain) {
-        this.domain = domain || 'https://etl-auth.herokuapp.com/api/v1/auth'
+        this.domain = domain || 'https://etl-authorize.herokuapp.com/api/v1/auth'
         this.fetch = this.fetch.bind(this)
         this.login = this.login.bind(this)
     }
@@ -41,7 +41,7 @@ export default class AuthService {
             }
             headers['x-access-token'] = this.getToken();
 
-            const res = await fetch(`https://etl-auth.herokuapp.com/api/v1/user/${id}`, {headers})
+            const res = await fetch(`https://etl-authorize.herokuapp.com/api/v1/user/${id}`, {headers})
                 .then(res => {
                     return res;
                 })

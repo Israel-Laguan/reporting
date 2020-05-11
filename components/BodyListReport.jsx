@@ -30,7 +30,7 @@ const BodyListReport = ({ load, data = [], auth }) => {
     }
     headers['x-access-token'] = auth.getToken()
     const res = await fetch(
-      `https://etl-auth.herokuapp.com/api/v1/report/${id}`,
+      `https://etl-authorize.herokuapp.com/api/v1/report/${id}`,
       { headers, method: 'DELETE' },
     )
     if (!res.ok) {

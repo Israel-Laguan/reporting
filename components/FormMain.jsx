@@ -59,7 +59,7 @@ const FormMain = ({ invoice = {}, auth, edit }) => {
       }),
     }
     const res = await fetch(
-      `https://etl-auth.herokuapp.com/api/v1/report/${
+      `https://etl-authorize.herokuapp.com/api/v1/report/${
         edit ? invoice.report_id : ''
       }`,
       {

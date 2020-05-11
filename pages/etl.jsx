@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from 'next/link'
 import Header from "../components/Header";
 import withAuth from "../utils/withAuth";
@@ -15,35 +15,30 @@ import {
 } from "reactstrap";
 import swal from "sweetalert";
 
-//const style = {};
-
-// const mockSumaryData = {
-//   sumary1: "soy un sumary",
-//   sumary2: "soy una sumary",
-//   sumary3: "soy uno sumary",
-//   sumary4: "soy une sumary",
-//   sumary5: "soy unu sumary"
-// };
-
 const ELT = props => {
   const [modalRepli, setModalRepli] = useState(false);
+  const [modalDB, setModalDB] = useState(false);
   const [modalCredentials, setModalCredentials] = useState(false);
   const [credentials, setCredentials] = useState(false);
-  // const [sumary, setSumary] = useState(false);
+  const [dataDB, setDataDB] = useState({})
 
+  const toggleDB = () => setModalDB(!modalDB);
   const toggleRepli = () => setModalRepli(!modalRepli);
   const toggleCredentials = () => setModalCredentials(!modalCredentials);
 
-  // useEffect(() => {
-  //   const getSumary = async () => {
-  //     const sumary = await fetcher("/sumary");
-  //     if (!sumary || !sumary.ok) {
-  //       return setSumary(Object.values(mockSumaryData));
-  //     }
-  //     setSumary(sumary.data);
-  //   };
-  //   getSumary();
-  // }, []);
+  const submitCredentials = (e) => {
+    e.preventDefault();
+    const data = e.target;
+    const formData = {
+      host: data.host.value,
+      database: data.database.value,
+      user: data.user.value,
+      password: data.password.value,
+      port: data.port.value,
+    }
+    setDataDB(formData)
+    toggleDB(false)
+  }
 
   const getUserData = () => {
     const user_id = localStorage.getItem("user_id");
@@ -62,20 +57,22 @@ const ELT = props => {
     };
   };
   const handleRepliDW = async () => {
-    const response = getUserData();
     try {
+      const response = getUserData();
       const headers = {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        'x-access-token': response.access_token
       }
-      headers['x-access-token'] = response.access_token
+      const options = { method: 'POST', headers, body: JSON.stringify(dataDB) }
       const res = await fetch(
-        'https://etl-server.herokuapp.com/export',
-        { method: 'PUT', headers },
+        'http://localhost:8080/export',
+        options,
       )
-      const { ok, errors, msg, data } = await res.json()
-      if (!ok) {
-        console.error(msg, errors)
+      console.log(res)
+      const { error, ok, errors, msg, data } = await res.json()
+      if (!ok || error) {
+        console.error(error, msg, errors)
         return swal('Error!', msg, 'error')
       }
       console.log(msg, data)
@@ -121,7 +118,12 @@ const ELT = props => {
             <div>
               <h2>Bienvenido al DataWarehouse</h2>
             </div>
-            <div className="">
+            <div>
+              <Button name="dwRepli" onClick={toggleDB} color="info">
+                Seleccionar DB
+              </Button>
+            </div>
+            <div>
               <Button name="dwRepli" onClick={toggleRepli} color="info">
                 Replicar a DW
               </Button>
@@ -138,15 +140,6 @@ const ELT = props => {
           </div>
         </Container>
         <section className="mt-5 p-5">
-          {/* <div>
-            {sumary
-              ? sumary.map(e => (
-                  <div>
-                    <p>{`${e}`}</p>
-                  </div>
-                ))
-              : null}
-          </div> */}
         <Link href={`/`}>
           <Button className="ml-5 mb-5 mt-5" color="primary" size="lg">
             ⬅️ Volver
@@ -154,16 +147,86 @@ const ELT = props => {
         </Link>
         </section>
 
-        <Modal isOpen={modalRepli} toggle={toggleRepli}>
-          <ModalHeader toggle={toggleRepli}>Confirmar</ModalHeader>
+        <Modal isOpen={modalDB} toggle={toggleDB}>
+          <ModalHeader toggle={toggleDB}>
+          Ingrese las credenciales de la instancia de Base de Datos a ser exportada:
+          </ModalHeader>
           <ModalBody>
-            ¿Esta seguro que quiere replicar a DataWharehause?
+            <form name="form" className="form" onSubmit={submitCredentials}>
+              <div className="form-group">
+                <label htmlFor="host">Identificador de la Instancia (HOST)</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  
+                  id="host"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="database">Nombre de la base de datos (DATABASE)</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  
+                  id="database"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="user">Nombre del usuario maestro (USER)</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  
+                  id="user"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Contraseña maestra (PASSWORD)</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  
+                  id="password"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="port">Puerto de conexión (PORT)</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  defaultValue={5432}
+                  id="port"
+                />
+              </div>
+              <Button type="submit" color="warning">
+                Seleccionar esta DB
+              </Button>
+            </form>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={handleRepliDW} color="primary">
-              Aceptar
-            </Button>{" "}
-            <Button color="secondary" onClick={toggleRepli}>
+            <Button color="danger" onClick={toggleDB}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
+        <Modal isOpen={modalRepli} toggle={toggleRepli}>
+          <ModalHeader toggle={toggleRepli}>
+          Confirme si quiere exportar esta DB
+          </ModalHeader>
+          <ModalBody>
+            {dataDB.database ? dataDB.database : "No has puesto las credenciales!" }
+          </ModalBody>
+          <ModalFooter>
+          {dataDB.database &&
+            <Button color="warning" onClick={handleRepliDW}>
+              Exportar desde esta DB
+            </Button>
+          }
+            <Button color="danger" onClick={toggleRepli}>
               Cancel
             </Button>
           </ModalFooter>

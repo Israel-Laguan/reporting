@@ -14,7 +14,7 @@ const fetcher = async (url, method = 'GET', data = {})=>{
           console.log("Fetch Method: ",method)
           headers['x-access-token'] = localStorage.getItem('id_token');
 
-        const res = await fetch(`https://etl-auth.herokuapp.com/api/v1${url}`, {
+        const res = await fetch(`https://etl-authorize.herokuapp.com/api/v1${url}`, {
             headers,
             method,
             body

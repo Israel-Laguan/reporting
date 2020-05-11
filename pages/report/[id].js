@@ -17,7 +17,7 @@ const Report = ({ auth }) => {
         'Content-Type': 'application/json',
       }
       headers['x-access-token'] = auth.getToken()
-      const res = await fetch(`https://etl-auth.herokuapp.com/api/v1/report/${id}`, {
+      const res = await fetch(`https://etl-authorize.herokuapp.com/api/v1/report/${id}`, {
         headers,
       })
       const { ok, errors, msg, data } = await res.json()

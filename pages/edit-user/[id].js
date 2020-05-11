@@ -19,7 +19,7 @@ const EditUser = ({auth}) => {
           Accept: 'application/json',
         }
         headers['x-access-token'] = auth.getToken();
-        const res = await fetch(`https://etl-auth.herokuapp.com/api/v1/user/${id}`, {headers})
+        const res = await fetch(`https://etl-authorize.herokuapp.com/api/v1/user/${id}`, {headers})
         const { ok, errors, msg, data } = await res.json()
         if (!ok) {
           swal("Error!", errors[0].message, "error");

@@ -59,6 +59,12 @@ const Header = ({
                 </Link>
               </NavItem>
             )}
+              <NavItem>
+                <Link href="https://app.powerbi.com/reportEmbed?reportId=85932398-1df6-40bb-87ac-b6e7f4d2d530&autoAuth=true&ctid=c26c8126-bddb-4012-a85c-7f7475201518&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXNvdXRoLWNlbnRyYWwtdXMtcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D" passHref>
+                  <NavLink>📝 Ver Reporte</NavLink>
+                </Link>
+              </NavItem>
+            
             {createUser && isAdmin && (
               <NavItem>
                 <Link href="/new-user" passHref>

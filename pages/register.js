@@ -48,7 +48,7 @@ class RegisterPage extends React.Component {
         })
       };
       const res = await fetch(
-        "https://etl-auth.herokuapp.com/api/v1/auth/signup",
+        "https://etl-authorize.herokuapp.com/api/v1/auth/signup",
         {
           ...options,
           headers

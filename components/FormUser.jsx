@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Router from 'next/router'
-import useForm from '../utilities/useForm'
+import useForm from '../utils/useForm'
 import withAuth from '../utils/withAuth'
 import swal from 'sweetalert'
 import {Spinner} from 'reactstrap'
@@ -26,9 +26,9 @@ const FormUser = ({ initialValues = {}, auth, edit }) => {
       }),
     }
     const url = edit
-      ? `https://etl-auth.herokuapp.com/api/v1/user/${initialValues.email &&
+      ? `https://etl-authorize.herokuapp.com/api/v1/user/${initialValues.email &&
           initialValues._id}`
-      : 'https://etl-auth.herokuapp.com/api/v1/user'
+      : 'https://etl-authorize.herokuapp.com/api/v1/user'
     const res = await fetch(url, {
       headers,
       ...options,
@@ -99,9 +99,8 @@ const FormUser = ({ initialValues = {}, auth, edit }) => {
       <div className="form-group d-flex justify-content-center">
         <button 
           className="btn btn-primary"
-          disabled={load}
         >          
-          <span className={load?null:'d-none'}>{initialValues ? 'Guardar' : 'Registrar'}</span>
+          <span>{initialValues ? 'Guardar' : 'Registrar'}</span>
           <span className={load?'d-none':null}><Spinner size="sm" color="light" /></span>
         </button>
         {'  '}

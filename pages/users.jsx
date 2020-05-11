@@ -34,7 +34,7 @@ const Users = ({ auth, list = [] }) => {
       }
       headers['x-access-token'] = auth.getToken()
       const res = await fetch(
-        'https://etl-auth.herokuapp.com/api/v1/user/all',
+        'https://etl-authorize.herokuapp.com/api/v1/user/all',
         { headers },
       )
       setLoad(false)

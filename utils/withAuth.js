@@ -6,7 +6,7 @@ import { Spinner } from 'reactstrap';
 
 export default function withAuth(AuthComponent) {
 
-    const Auth = new AuthService('https://etl-auth.herokuapp.com/api/v1/auth')
+    const Auth = new AuthService('https://etl-authorize.herokuapp.com/api/v1/auth')
 
     return class Authenticated extends Component {
         constructor(props) {
