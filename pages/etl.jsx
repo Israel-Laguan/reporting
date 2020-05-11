@@ -66,7 +66,7 @@ const ELT = props => {
       }
       const options = { method: 'POST', headers, body: JSON.stringify(dataDB) }
       const res = await fetch(
-        'http://localhost:8080/export',
+        'https://etl-authorize.herokuapp.com/export',
         options,
       )
       console.log(res)
