@@ -7,12 +7,12 @@ const Home = ({ auth }) => (
   <div>
     <Header users etl auth={auth} />
     <Container>
-      <Jumbotron>
-        <img src="https://www.nisira.com.pe/images/logo.png" />
+    	<div className="d-flex flex-row justify-content-center align-items-center vh-100">
+    	<img src="https://www.nisira.com.pe/images/logo.png"/>
         <h2>
         Bienvenido!
         </h2>
-      </Jumbotron>
+    	</div>
     </Container>
   </div>
 );
