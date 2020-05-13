@@ -8,7 +8,7 @@ const Home = ({ auth }) => (
     <Header users etl auth={auth} />
     <Container>
     	<div className="d-flex flex-row justify-content-center align-items-center vh-100">
-    	<img src="https://www.nisira.com.pe/images/logo.png"/>
+    	<img src="https://www.nisira.com.pe/images/logo.png" style={{width: "50vw"}}>
         <h2>
         Bienvenido!
         </h2>
