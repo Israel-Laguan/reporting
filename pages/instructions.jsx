@@ -20,6 +20,7 @@ const style = {
 }
 
 const instructions = () => {
+  console.log("Hello World")
   return (
     <>
       <Header />
