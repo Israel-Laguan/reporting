@@ -47,8 +47,7 @@ Existen 3 roles:
 
 - Crear reporte.
 
-
-author
+- Author
 <table style="width:100%">
   <tr>
     <td>
@@ -92,3 +91,25 @@ author
     </td>
   </tr>
 </table>
+
+<br>
+<br>
+
+# 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!
+Feel free to check the [issues page](https://github.com/Israel-Laguan/reporting/issues).
+
+# 🤗 Show your support
+
+Give a ⭐️ if you like this project!
+
+# 🏅 Acknowledgements
+
+- [The Odin Project](https://www.theodinproject.com/)
+- [Readme header author](https://github.com/Israel-Laguan/reporting)
+
+# 📝 License
+
+This project is licensed under the [MIT](LICENSE)\
+Feel free to fork this project and improve it
