@@ -1,3 +1,36 @@
+<!-- PROJECT SHIELDS -->
+
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues-open][issues-open-shield]][issues-url]
+[![Issues-closed][issues-closed-shield]][issues-url]
+[![Contributors][contributors-shield]][contributors-url]
+[![Framework][badge-framework]][framework-url]
+[![contributions welcome][contributions-welcome]][issues-url]
+
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://www.microverse.org/">
+    <img src="https://user-images.githubusercontent.com/67714964/168645644-e8886fa4-9422-450f-99e3-db5cd9f80195.png" alt="Logo" width="280" height="250">
+  </a>
+
+  <h1 align="center">
+	Reporting
+  </h1>
+
+  <p align="center">
+    Dynamically rendering a restaurant homepage with JS and webpack
+    <br />
+	  🖊️
+    <a href="https://www.theodinproject.com/courses/javascript/lessons/restaurant-page">Assignment</a>
+    🐞
+    <a href="https://github.com/Israel-Laguan/reporting/issues">Report a Bug</a>
+    🙋‍♂️
+    <a href="https://github.com/Israel-Laguan/reporting/issues">Request Feature</a>
+  </p>
+</p>
+
 # This is a [Next.js](https://nextjs.org/) & bootstrap project with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
 
 # Next JS Application
@@ -114,3 +147,19 @@ Give a ⭐️ if you like this project!
 
 This project is licensed under the [MIT](LICENSE)\
 Feel free to fork this project and improve it
+
+<!-- MARKDOWN LINKS & IMAGES -->
+
+[contributors-shield]: https://img.shields.io/github/contributors/Israel-Laguan/reporting?style=for-the-badge
+[contributors-url]: https://github.com/Israel-Laguan/reporting/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Israel-Laguan/reporting?style=for-the-badge
+[forks-url]: https://img.shields.io/github/forks/Israel-Laguan/reporting
+[stars-shield]: https://img.shields.io/github/stars/Israel-Laguan/reporting?style=for-the-badge
+[stars-url]: https://img.shields.io/github/stars/Israel-Laguan/reporting
+[issues-open-shield]: https://img.shields.io/github/issues/Israel-Laguan/reporting?style=for-the-badge
+[issues-url]: https://img.shields.io/github/issues/Israel-Laguan/reporting
+[issues-closed-shield]: https://img.shields.io/github/issues-closed/Israel-Laguan/reporting?style=for-the-badge
+[badge-framework]: https://img.shields.io/badge/webpack-v4-9cf?style=for-the-badge
+[framework-url]: https://webpack.js.org/
+[contributions-welcome]: https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=for-the-badge
+[badge-license]: https://img.shields.io/:license-mit-blue.svg?style=for-the-badge
