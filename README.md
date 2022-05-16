@@ -11,7 +11,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://www.microverse.org/">
+  <a href="https://etl-reporting.vercel.app/">
     <img src="https://user-images.githubusercontent.com/67714964/168645644-e8886fa4-9422-450f-99e3-db5cd9f80195.png" alt="Logo" width="280" height="250">
   </a>
 
@@ -20,7 +20,7 @@
   </h1>
 
   <p align="center">
-    Dynamically rendering a restaurant homepage with JS and webpack
+    Creating a Reporting website using Next js and Bootstrap.
     <br />
 	  🖊️
     <a href="https://www.theodinproject.com/courses/javascript/lessons/restaurant-page">Assignment</a>
@@ -31,7 +31,7 @@
   </p>
 </p>
 
-# This is a [Next.js](https://nextjs.org/) & bootstrap project with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
+## This is a [Next.js](https://nextjs.org/) & bootstrap project with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
 
 # Next JS Application
 
