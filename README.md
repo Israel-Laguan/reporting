@@ -104,11 +104,6 @@ Feel free to check the [issues page](https://github.com/Israel-Laguan/reporting/
 
 Give a ⭐️ if you like this project!
 
-# 🏅 Acknowledgements
-
-- [The Odin Project](https://www.theodinproject.com/)
-- [Readme header author](https://github.com/Israel-Laguan/reporting)
-
 # 📝 License
 
 This project is licensed under the [MIT](LICENSE)\
