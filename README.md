@@ -1,6 +1,14 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
+# This is a [Next.js](https://nextjs.org/) & bootstrap project with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Next JS Application
+
+## Installation
+
+```bash
+1.clone this Repo.
+2.cd reporting
+3.npm install
+```
 
 First, run the development server:
 
@@ -9,8 +17,6 @@ npm run dev
 # or
 yarn dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 # Funciones de los Usuarios
 
