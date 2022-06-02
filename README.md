@@ -147,3 +147,19 @@ Give a ⭐️ if you like this project!
 
 This project is licensed under the [MIT](LICENSE)\
 Feel free to fork this project and improve it
+
+<!-- MARKDOWN LINKS & IMAGES -->
+
+[contributors-shield]: https://img.shields.io/github/contributors/Israel-Laguan/reporting?style=for-the-badge
+[contributors-url]: https://github.com/Israel-Laguan/reporting/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Israel-Laguan/reporting?style=for-the-badge
+[forks-url]: https://github.com/Israel-Laguan/reporting/network/members
+[stars-shield]: https://img.shields.io/github/stars/Israel-Laguan/reporting?style=for-the-badge
+[stars-url]: https://github.com/Israel-Laguan/reporting/stargazers
+[issues-open-shield]: https://img.shields.io/github/issues/Israel-Laguan/reporting?style=for-the-badge
+[issues-url]: https://github.com/Israel-Laguan/reporting/issues
+[issues-closed-shield]: https://img.shields.io/github/issues-closed/Israel-Laguan/reporting?style=for-the-badge
+[badge-framework]: https://img.shields.io/badge/webpack-v4-9cf?style=for-the-badge
+[framework-url]: https://webpack.js.org/
+[contributions-welcome]: https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=for-the-badge
+[badge-license]: https://img.shields.io/:license-mit-blue.svg?style=for-the-badge
