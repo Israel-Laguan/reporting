@@ -50,6 +50,7 @@ npm run dev
 # or
 yarn dev
 ```
+Then open `http://localhost:3000` to view it in your browser.
 
 # Funciones de los Usuarios
 
